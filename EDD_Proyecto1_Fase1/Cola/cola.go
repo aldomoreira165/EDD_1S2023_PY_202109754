@@ -28,15 +28,26 @@ func Agregar_Estudiante(estudiante *Persona.Estudiante, cola *Cola){
 		}
 		//Agregar el nuevo nodo hasta el final
 		temp.Siguiente = nuevoEstudiante
+		cola.Tamaño += 1
 	}
 }
 
 func Imprimir_Cola(cola *Cola){
 	temp := cola.Primero
-	for temp != nil{
-		fmt.Println("Estudiante: ", temp.Estudiante.Nombre)
-		temp = temp.Siguiente
+
+	if temp == nil {
+		fmt.Println("No hay ningún estudiante en espera.")
+	}else{
+		fmt.Println("********** Pendientes: ",cola.Tamaño," **********")
+		for temp != nil{
+			fmt.Println("Estudiante: ", temp.Estudiante.Nombre)
+			temp = temp.Siguiente
+		}
 	}
+}
+
+func Obtener_Tamaño(cola *Cola){
+	fmt.Println(cola.Tamaño)
 }
 
 
