@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"modulo/Funciones"
 	"modulo/Cola"
+	"modulo/Lista"
 )
 
 func main() {
 
 	cola_estudiantes_pendientes := Cola.Nueva_Cola()
+	lista_estudiantes_aceptados := Lista.Nueva_Lista()
 
 	var (
 		//usuario string
@@ -31,7 +33,7 @@ func main() {
 			fmt.Scan(&usuario)
 			fmt.Print("Ingrese tu password ")
 			fmt.Scan(&password)*/
-			Funciones.Menu_Administrador(cola_estudiantes_pendientes)
+			Funciones.Menu_Administrador(cola_estudiantes_pendientes, lista_estudiantes_aceptados)
 		case 2:
 			fmt.Println("Has salido del sistema.")
 			exit = true

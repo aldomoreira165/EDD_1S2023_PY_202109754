@@ -3,14 +3,15 @@ package Funciones
 import (
 	"fmt"
 	"modulo/Cola"
+	"modulo/Lista"
 	"modulo/Persona"
 )
 
-func Menu_Administrador(c *Cola.Cola) {
+func Menu_Administrador(c *Cola.Cola, l *Lista.Lista_Enlazada) {
 
 	var (
 		opcion int
-		exit bool
+		exit   bool
 	)
 
 	for !exit {
@@ -25,9 +26,9 @@ func Menu_Administrador(c *Cola.Cola) {
 
 		switch opcion {
 		case 1:
-			Estudiantes_Pendientes(c)
+			Estudiantes_Pendientes(c, l)
 		case 2:
-			fmt.Println("Has escogido la op 2")
+			Ver_Estudiantes_Aceptados(l)
 		case 3:
 			Registrar_Nuevo_Estudiante(c)
 		case 4:
@@ -39,8 +40,49 @@ func Menu_Administrador(c *Cola.Cola) {
 	}
 }
 
-func Estudiantes_Pendientes(c *Cola.Cola){
-	Cola.Imprimir_Cola(c)
+func Estudiantes_Pendientes(c *Cola.Cola, l *Lista.Lista_Enlazada) {
+	temp := c.Primero
+
+	if temp == nil {
+		fmt.Println("No hay ningún estudiante en espera.")
+	} else {
+		opcion := 0
+		for temp != nil && opcion != 3 {
+
+			fmt.Println("********** Pendientes: ", c.Tamaño, " **********")
+			fmt.Println("Estudiante Actual: ", temp.Estudiante.Nombre, " ", temp.Estudiante.Apellido)
+			fmt.Println("	1. Aceptar al estudiante")
+			fmt.Println("	2. Rechazar al estudiante")
+			fmt.Println("	3. Volver al menú")
+			fmt.Scanln(&opcion)
+
+			switch opcion {
+			case 1:
+				estudiante := Cola.Sacar_Estudiante(c)
+				Lista.Insertar_Final(estudiante.Estudiante, l)
+				fmt.Println("Has aceptado al estudiante")
+				temp = temp.Siguiente
+			case 2:
+				Cola.Sacar_Estudiante(c)
+				fmt.Println("Has rechazado al estudiante")
+				temp = temp.Siguiente
+			}
+		}
+	}
+}
+
+func Ver_Estudiantes_Aceptados(l *Lista.Lista_Enlazada) {
+	temp := l.Primero
+	if temp != nil {
+		fmt.Println("********** Listado de Estudiantes **********")
+		for temp != nil {
+			fmt.Println("Nombre: ", temp.Estudiante.Nombre, " ", temp.Estudiante.Apellido, ", Carnet: ", temp.Estudiante.Carnet)
+			fmt.Println("*******************************************")
+			temp = temp.Siguiente
+		}
+	} else {
+		fmt.Println("No hay estudiantes aceptados.")
+	}
 }
 
 func Registrar_Nuevo_Estudiante(c *Cola.Cola) {
@@ -48,7 +90,7 @@ func Registrar_Nuevo_Estudiante(c *Cola.Cola) {
 	var apellido_estudiante string
 	var carnet_estudiante int
 	var password_estudiante string
-	
+
 	//obteniendo datos de estudiante
 	fmt.Println("***** Registro de Estudiantes - EDD GoDrive *****")
 	fmt.Print("Ingresa nombre: ")
