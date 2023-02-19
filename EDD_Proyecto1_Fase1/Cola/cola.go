@@ -1,14 +1,9 @@
-package Estructuras
+package Cola
 
 import (
 	"fmt"
 	"modulo/Persona"
 )
-
-type Nodo struct{
-	Siguiente *Nodo
-	Estudiante *Persona.Estudiante
-}
 
 type Cola struct{
 	Primero *Nodo
@@ -19,7 +14,7 @@ func Nueva_Cola () *Cola{
 	return &Cola{nil, 0}
 }
 
-func Insertar_Cola(estudiante *Persona.Estudiante, cola *Cola){
+func Agregar_Estudiante(estudiante *Persona.Estudiante, cola *Cola){
 	var nuevoEstudiante *Nodo = &Nodo{nil, estudiante}
 	//verificando si la cola está vacía o no
 	if cola.Primero == nil{
