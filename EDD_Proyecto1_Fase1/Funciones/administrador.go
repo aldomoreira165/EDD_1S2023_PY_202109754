@@ -28,6 +28,7 @@ func Menu_Administrador(c *Cola.Cola, l *Lista.Lista_Enlazada) {
 		case 1:
 			Estudiantes_Pendientes(c, l)
 		case 2:
+			Lista.Ordenar(l)
 			Ver_Estudiantes_Aceptados(l)
 		case 3:
 			Registrar_Nuevo_Estudiante(c)

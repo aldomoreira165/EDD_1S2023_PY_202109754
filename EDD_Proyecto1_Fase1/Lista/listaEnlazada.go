@@ -27,3 +27,22 @@ func Insertar_Final(estudiante *Persona.Estudiante, lista *Lista_Enlazada) {
 	}
 }
 
+//ordenando lista de menor a mayor por el método de quicksort
+func Ordenar(lista *Lista_Enlazada){
+	tamaño_lista := lista.Tamaño 
+	if tamaño_lista > 1{
+		for i := 0; i < tamaño_lista-1; i++{
+			act := lista.Primero
+			next := act.Siguiente
+			for j := 0; j<tamaño_lista-i-1; j++{
+				if act.Estudiante.Carnet > next.Estudiante.Carnet{
+					temp := act.Estudiante
+					act.Estudiante = next.Estudiante
+					next.Estudiante = temp
+				}
+				act = next
+				next = act.Siguiente
+			}
+		}
+	}
+}

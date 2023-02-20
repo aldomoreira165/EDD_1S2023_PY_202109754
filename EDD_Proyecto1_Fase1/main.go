@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"modulo/Funciones"
 	"modulo/Cola"
+	"modulo/Funciones"
 	"modulo/Lista"
 )
 
@@ -13,8 +13,6 @@ func main() {
 	lista_estudiantes_aceptados := Lista.Nueva_Lista()
 
 	var (
-		//usuario string
-		//password string
 		exit bool
 	)
 
@@ -22,19 +20,44 @@ func main() {
 
 	for !exit {
 		fmt.Println("**************** EDD GoDrive ****************")
-		fmt.Println("*             1. Iniciar Sesión             *")
-		fmt.Println("*            2. Salir del Sistema           *")
+		fmt.Println("*  1. Iniciar Sesión como administrador     *")
+		fmt.Println("*    2. Iniciar Sesión como Estudiante      *")
+		fmt.Println("*            3. Salir del Sistema           *")
 		fmt.Println("*********************************************")
 		fmt.Scanln(&opcion)
 
 		switch opcion{
 		case 1:
-			/*fmt.Print("Ingresa tu usuario: ")
+			var usuario string
+			var password string
+			fmt.Print("Ingresa tu usuario: ")
 			fmt.Scan(&usuario)
 			fmt.Print("Ingrese tu password ")
-			fmt.Scan(&password)*/
-			Funciones.Menu_Administrador(cola_estudiantes_pendientes, lista_estudiantes_aceptados)
+			fmt.Scan(&password)
+
+
+			if usuario == "admin" && password == "admin" {
+				Funciones.Menu_Administrador(cola_estudiantes_pendientes, lista_estudiantes_aceptados)
+			}else{
+				fmt.Println("Datos no encontrados.")
+			}
 		case 2:
+			var usuario int
+			var password string
+			fmt.Print("Ingresa tu usuario: ")
+			fmt.Scan(&usuario)
+			fmt.Print("Ingrese tu password ")
+			fmt.Scan(&password)
+
+			encontrado, contraseña, estudiante := Funciones.Buscar(lista_estudiantes_aceptados, usuario, password)
+			if encontrado == true && contraseña == true {
+				Funciones.Menu_Estudiante(estudiante)
+			}else if encontrado == true && contraseña == false {
+				fmt.Println("ENCONTRADO. DATOS DE INICIO DE SESION INCORRECTOS")
+			}else{
+				Funciones.No_Encontrado()
+			}
+		case 3:
 			fmt.Println("Has salido del sistema.")
 			exit = true
 		}
