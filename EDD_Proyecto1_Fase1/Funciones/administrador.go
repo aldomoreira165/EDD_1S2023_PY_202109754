@@ -5,9 +5,11 @@ import (
 	"modulo/Cola"
 	"modulo/Lista"
 	"modulo/Persona"
+	"modulo/Pila"
+	"time"
 )
 
-func Menu_Administrador(c *Cola.Cola, l *Lista.Lista_Enlazada) {
+func Menu_Administrador(c *Cola.Cola, l *Lista.Lista_Enlazada, p_admin *Pila.Pila) {
 
 	var (
 		opcion int
@@ -26,7 +28,7 @@ func Menu_Administrador(c *Cola.Cola, l *Lista.Lista_Enlazada) {
 
 		switch opcion {
 		case 1:
-			Estudiantes_Pendientes(c, l)
+			Estudiantes_Pendientes(c, l, p_admin)
 		case 2:
 			Lista.Ordenar(l)
 			Ver_Estudiantes_Aceptados(l)
@@ -37,11 +39,13 @@ func Menu_Administrador(c *Cola.Cola, l *Lista.Lista_Enlazada) {
 		case 5:
 			fmt.Println("Has cerrado sesión (Administador).")
 			exit = true
+		case 6:
+			Pila.Imprimir_Pila(p_admin)
 		}
 	}
 }
 
-func Estudiantes_Pendientes(c *Cola.Cola, l *Lista.Lista_Enlazada) {
+func Estudiantes_Pendientes(c *Cola.Cola, l *Lista.Lista_Enlazada, p *Pila.Pila) {
 	temp := c.Primero
 
 	if temp == nil {
@@ -61,10 +65,14 @@ func Estudiantes_Pendientes(c *Cola.Cola, l *Lista.Lista_Enlazada) {
 			case 1:
 				estudiante := Cola.Sacar_Estudiante(c)
 				Lista.Insertar_Final(estudiante.Estudiante, l)
+
+				//pila que guarda las acciones del admin
+				Pila.Agregar_Pila("Se aceptó estudiante", time.Now(), p)
 				fmt.Println("Has aceptado al estudiante")
 				temp = temp.Siguiente
 			case 2:
 				Cola.Sacar_Estudiante(c)
+				Pila.Agregar_Pila("Se rechazó estudiante", time.Now(), p)
 				fmt.Println("Has rechazado al estudiante")
 				temp = temp.Siguiente
 			}

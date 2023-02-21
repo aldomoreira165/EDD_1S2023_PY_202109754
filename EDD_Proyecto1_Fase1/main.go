@@ -5,12 +5,14 @@ import (
 	"modulo/Cola"
 	"modulo/Funciones"
 	"modulo/Lista"
+	"modulo/Pila"
 )
 
 func main() {
 
 	cola_estudiantes_pendientes := Cola.Nueva_Cola()
 	lista_estudiantes_aceptados := Lista.Nueva_Lista()
+	pila_acciones_administrador := Pila.Nueva_Pila()
 
 	var (
 		exit bool
@@ -37,7 +39,7 @@ func main() {
 
 
 			if usuario == "admin" && password == "admin" {
-				Funciones.Menu_Administrador(cola_estudiantes_pendientes, lista_estudiantes_aceptados)
+				Funciones.Menu_Administrador(cola_estudiantes_pendientes, lista_estudiantes_aceptados, pila_acciones_administrador)
 			}else{
 				fmt.Println("Datos no encontrados.")
 			}
