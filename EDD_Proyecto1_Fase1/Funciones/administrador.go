@@ -68,6 +68,7 @@ func Estudiantes_Pendientes(c *Cola.Cola, l *Lista.Lista_Enlazada, p *Pila.Pila)
 
 				//pila que guarda las acciones del admin
 				Pila.Agregar_Pila("Se aceptó estudiante", time.Now(), p)
+				Persona.Pila_Logins(estudiante.Estudiante)
 				fmt.Println("Has aceptado al estudiante")
 				temp = temp.Siguiente
 			case 2:

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"modulo/Lista"
 	"modulo/Persona"
+	"modulo/Pila"
 )
 
 func Menu_Estudiante(estudiante *Persona.Estudiante) {
@@ -15,12 +16,15 @@ func Menu_Estudiante(estudiante *Persona.Estudiante) {
 
 	for !exit {
 		fmt.Println("*** Bienvenido ",estudiante.Nombre," - EDD GoDrive ***")
-		fmt.Println("*      1. Cerrar sesión                     *")
+		fmt.Println("*  1. Ver bitácora de inicios de sesión     *")
+		fmt.Println("*          2. Cerrar sesión                 *")
 		fmt.Println("*********************************************")
 		fmt.Scanln(&opcion)
 
 		switch opcion {
 		case 1:
+			Pila.Imprimir_Pila(estudiante.Logins)
+		case 2:
 			fmt.Println("Has cerrado sesión (Estudiante).")
 			exit = true
 		}

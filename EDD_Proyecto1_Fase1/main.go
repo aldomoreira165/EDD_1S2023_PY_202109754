@@ -6,6 +6,7 @@ import (
 	"modulo/Funciones"
 	"modulo/Lista"
 	"modulo/Pila"
+	"time"
 )
 
 func main() {
@@ -53,6 +54,7 @@ func main() {
 
 			encontrado, contraseña, estudiante := Funciones.Buscar(lista_estudiantes_aceptados, usuario, password)
 			if encontrado == true && contraseña == true {
+				Pila.Agregar_Pila("Inicio de sesión", time.Now(), estudiante.Logins)
 				Funciones.Menu_Estudiante(estudiante)
 			}else if encontrado == true && contraseña == false {
 				fmt.Println("ENCONTRADO. DATOS DE INICIO DE SESION INCORRECTOS")
