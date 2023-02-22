@@ -3,9 +3,11 @@ package Funciones
 import (
 	"fmt"
 	"modulo/Cola"
+	//"modulo/Dot"
 	"modulo/Lista"
 	"modulo/Persona"
 	"modulo/Pila"
+	"modulo/JSON"
 	"time"
 )
 
@@ -66,6 +68,9 @@ func Estudiantes_Pendientes(c *Cola.Cola, l *Lista.Lista_Enlazada, p *Pila.Pila)
 				estudiante := Cola.Sacar_Estudiante(c)
 				Lista.Insertar_Final(estudiante.Estudiante, l)
 
+				//actualizando json de estudiantes aceptos
+				JSON.Generar_JSON(l, "aceptados.json")
+
 				//pila que guarda las acciones del admin
 				Pila.Agregar_Pila("Se aceptó estudiante", time.Now(), p)
 				Persona.Pila_Logins(estudiante.Estudiante)
@@ -116,4 +121,16 @@ func Registrar_Nuevo_Estudiante(c *Cola.Cola) {
 
 	Cola.Agregar_Estudiante(nuevo_estudiante, c)
 	fmt.Println("Estudiante agregado a la cola exitosamente.")
+
+	//generando grafica
+
+	/*path, error := os.Getwd()
+
+	if error != nil {
+		log.Println(error)
+	}
+
+	fmt.Println(path)
+	Dot.WriteDotFile(Cola.Grafica(c), "esperando.dot", path)
+	Dot.GeneratePNG("esperando.dot", path)*/
 }
