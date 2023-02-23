@@ -1,7 +1,9 @@
 package Dot
 
 import (
+	"bytes"
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/exec"
 )
@@ -42,23 +44,29 @@ func WriteDotFile(code string, fileName string, path string) {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println("Archivo .dot creado.")
-
 }
 
 // Método para ejecutar comando en consola
-func GeneratePNG(fileName string, path string) {
-	cmd := exec.Command("dot", "-Tpng", path, "-o", path)
-	err := cmd.Run()
-	if err != nil{
-		fmt.Println(err)
-	}
-	_, err = os.Stat(path)
-    if os.IsNotExist(err) {
-        fmt.Println("Error: no se pudo generar el archivo PNG")
-    } else {
-        fmt.Println("Archivo PNG generado exitosamente")
+func GeneratePNG(fileName string) {
+	nombre := fileName + ".dot"
+	data, err := ioutil.ReadFile(nombre)
+    if err != nil {
+        panic(err)
+    }
+
+    // Crea un comando Graphviz para generar el archivo PNG
+    cmd := exec.Command("dot", "-Tpng")
+    cmd.Stdin = bytes.NewReader(data)
+
+    // Escribe el archivo PNG
+    out, err := cmd.Output()
+    if err != nil {
+        panic(err)
+    }
+
+	nombre_imagen := fileName + ".png"
+    err = ioutil.WriteFile(nombre_imagen, out, 0644)
+    if err != nil {
+        panic(err)
     }
 }
-
-//obtener la direccion del directorio

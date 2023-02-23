@@ -41,5 +41,4 @@ func Generar_JSON(lista *Lista.Lista_Enlazada, archivo string) {
 		fmt.Println("Error al escribir el archivo:", err)
 		return
 	}
-	fmt.Println("Archivo", archivo, "creado correctamente.")
 }

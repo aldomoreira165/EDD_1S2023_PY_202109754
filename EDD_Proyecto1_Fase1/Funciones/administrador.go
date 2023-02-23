@@ -2,12 +2,14 @@ package Funciones
 
 import (
 	"fmt"
+	"log"
 	"modulo/Cola"
-	//"modulo/Dot"
+	"modulo/Dot"
+	"modulo/JSON"
 	"modulo/Lista"
 	"modulo/Persona"
 	"modulo/Pila"
-	"modulo/JSON"
+	"os"
 	"time"
 )
 
@@ -67,19 +69,40 @@ func Estudiantes_Pendientes(c *Cola.Cola, l *Lista.Lista_Enlazada, p *Pila.Pila)
 			case 1:
 				estudiante := Cola.Sacar_Estudiante(c)
 				Lista.Insertar_Final(estudiante.Estudiante, l)
-
-				//actualizando json de estudiantes aceptos
-				JSON.Generar_JSON(l, "aceptados.json")
-
 				//pila que guarda las acciones del admin
 				Pila.Agregar_Pila("Se aceptó estudiante", time.Now(), p)
 				Persona.Pila_Logins(estudiante.Estudiante)
 				fmt.Println("Has aceptado al estudiante")
+
+				//actualizando json de estudiantes aceptos
+				JSON.Generar_JSON(l, "aceptados.json")
+				//generando graphviz de acciones de admin
+
+				path, error := os.Getwd()
+
+				if error != nil {
+					log.Println(error)
+				}
+
+				Dot.WriteDotFile(Pila.Grafica(p), "acciones-admin.dot", path)
+				Dot.GeneratePNG("acciones-admin")
+
 				temp = temp.Siguiente
 			case 2:
 				Cola.Sacar_Estudiante(c)
 				Pila.Agregar_Pila("Se rechazó estudiante", time.Now(), p)
 				fmt.Println("Has rechazado al estudiante")
+
+				//generando graphviz de acciones de admin
+				path, error := os.Getwd()
+
+				if error != nil {
+					log.Println(error)
+				}
+
+				Dot.WriteDotFile(Pila.Grafica(p), "acciones-admin.dot", path)
+				Dot.GeneratePNG("acciones-admin")
+
 				temp = temp.Siguiente
 			}
 		}
@@ -124,13 +147,11 @@ func Registrar_Nuevo_Estudiante(c *Cola.Cola) {
 
 	//generando grafica
 
-	/*path, error := os.Getwd()
+	path, error := os.Getwd()
 
 	if error != nil {
 		log.Println(error)
 	}
-
-	fmt.Println(path)
 	Dot.WriteDotFile(Cola.Grafica(c), "esperando.dot", path)
-	Dot.GeneratePNG("esperando.dot", path)*/
+	Dot.GeneratePNG("esperando")
 }

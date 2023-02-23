@@ -62,13 +62,14 @@ func Grafica(cola *Cola) string {
 
 	contador = 0
 	temp = cola.Primero
-	for temp != nil {
+	for temp != nil && (contador+1)!= cola.Tamaño{
 		conexiones += "NODO" + strconv.Itoa(contador) + "->" + "NODO" + (strconv.Itoa(contador + 1)) + ";\n"
 		temp = temp.Siguiente
 		contador += 1
 	}
 
 	return "digraph G {\n" +
+		"label=\"Estudiantes en Espera\"\n"+
 		"node[shape=rectangle, style=filled, color=lightsalmon];\n" +
 		"rankdir=LR;\n" +
 		nodos + // NODOS
