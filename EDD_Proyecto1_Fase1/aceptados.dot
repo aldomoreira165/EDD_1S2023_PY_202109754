@@ -1,0 +1,48 @@
+digraph G {
+label="Estudiantes Aceptados"
+node[shape=rectangle, style=filled, color=lightsalmon];
+NODO0[label="Carnet: 200003877
+Nombre: Andrea Rodríguez"];
+NODO1[label="Carnet: 201403877
+Nombre: Ebany Larios"];
+NODO2[label="Carnet: 201709018
+Nombre: Cristian Suy"];
+NODO3[label="Carnet: 201780044
+Nombre: Leonardo Martinez"];
+NODO4[label="Carnet: 201803877
+Nombre: Jimena Hernández"];
+NODO5[label="Carnet: 202503877
+Nombre: Mónica Larios"];
+NODO6[label="Carnet: 3000000000
+Nombre: aldo moreira"];
+NODO0->NODO1;
+NODO1->NODO2;
+NODO2->NODO3;
+NODO3->NODO4;
+NODO4->NODO5;
+NODO5->NODO6;
+NODO6->NODO5;
+NODO5->NODO4;
+NODO4->NODO3;
+NODO3->NODO2;
+NODO2->NODO1;
+NODO1->NODO0;
+Estudiante0_N0[label="Inicio de sesión 2023-02-25 16:59:17"];
+Estudiante0_N1[label="Inicio de sesión 2023-02-25 16:58:51"];
+Estudiante1_N0[label="Inicio de sesión 2023-02-25 17:01:36"];
+Estudiante2_N0[label="Inicio de sesión 2023-02-25 16:59:37"];
+Estudiante3_N0[label="Inicio de sesión 2023-02-25 16:57:55"];
+Estudiante3_N1[label="Inicio de sesión 2023-02-25 16:57:19"];
+Estudiante4_N0[label="Inicio de sesión 2023-02-25 17:02:08"];
+Estudiante5_N0[label="Inicio de sesión 2023-02-25 17:00:22"];
+Estudiante5_N1[label="Inicio de sesión 2023-02-25 16:58:26"];
+{rank=same Estudiante0_N0 Estudiante1_N0 Estudiante2_N0 Estudiante3_N0 Estudiante4_N0 Estudiante5_N0 }
+{rank = same NODO0 NODO1 NODO2 NODO3 NODO4 NODO5 NODO6 }
+NODO0->Estudiante0_N0->Estudiante0_N1
+NODO1->Estudiante1_N0
+NODO2->Estudiante2_N0
+NODO3->Estudiante3_N0->Estudiante3_N1
+NODO4->Estudiante4_N0
+NODO5->Estudiante5_N0->Estudiante5_N1
+
+}

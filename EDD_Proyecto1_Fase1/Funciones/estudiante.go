@@ -53,33 +53,16 @@ func No_Encontrado() {
 
 //buscando al estudiante por el metodo de busqueda binaria
 func Buscar(l *Lista.Lista_Enlazada, carnet int, password string) (bool, bool, *Persona.Estudiante){
-	low := l.Primero
-    high := l.Ultimo
-    for low != nil && high != nil && low != high && high.Siguiente != low {
-        mid := low
-        for mid != high && mid.Siguiente != high {
-            mid = mid.Siguiente
-        }
-        if mid.Estudiante.Carnet == carnet {
-			if mid.Estudiante.Password == password{
-				return true, true, mid.Estudiante
-			}else{
-				return true, false, nil
-			}
-            
-        } else if mid.Estudiante.Carnet > carnet {
-            high = mid.Siguiente
-        } else {
-            low = mid.Siguiente
-        }
-    }
-    if low != nil && low.Estudiante.Carnet == carnet {
-        if low.Estudiante.Password == password{
-			return true, true, low.Estudiante
-		}else{
+	Lista.Ordenar(l)
+	temp := l.Primero
+
+	for temp != nil {
+		if temp.Estudiante.Carnet == carnet && temp.Estudiante.Password != password{
 			return true, false, nil
+		}else if temp.Estudiante.Carnet == carnet && temp.Estudiante.Password == password{
+			return true, true, temp.Estudiante
 		}
-    } else {
-        return false, false, nil
-    }
+		temp = temp.Siguiente
+	}
+	return false, false, nil
 }

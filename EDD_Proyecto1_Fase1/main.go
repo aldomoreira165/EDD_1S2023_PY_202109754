@@ -38,26 +38,28 @@ func main() {
 			fmt.Print("Ingrese tu password ")
 			fmt.Scan(&password)
 
-
 			if usuario == "admin" && password == "admin" {
 				Funciones.Menu_Administrador(cola_estudiantes_pendientes, lista_estudiantes_aceptados, pila_acciones_administrador)
 			}else{
 				fmt.Println("Datos no encontrados.")
+				Funciones.No_Encontrado()
 			}
 		case 2:
 			var usuario int
 			var password string
 			fmt.Print("Ingresa tu usuario: ")
 			fmt.Scan(&usuario)
-			fmt.Print("Ingrese tu password ")
+			fmt.Print("Ingrese tu password: ")
 			fmt.Scan(&password)
 
 			encontrado, contraseña, estudiante := Funciones.Buscar(lista_estudiantes_aceptados, usuario, password)
 			if encontrado == true && contraseña == true {
 				Pila.Agregar_Pila("Inicio de sesión", time.Now(), estudiante.Logins)
+				Funciones.Grafica_Aceptados(lista_estudiantes_aceptados)
 				Funciones.Menu_Estudiante(estudiante)
 			}else if encontrado == true && contraseña == false {
 				fmt.Println("ENCONTRADO. DATOS DE INICIO DE SESION INCORRECTOS")
+				Funciones.No_Encontrado()
 			}else{
 				Funciones.No_Encontrado()
 			}

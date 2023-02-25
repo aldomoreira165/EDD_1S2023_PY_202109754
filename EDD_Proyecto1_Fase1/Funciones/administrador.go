@@ -75,7 +75,9 @@ func Estudiantes_Pendientes(c *Cola.Cola, l *Lista.Lista_Enlazada, p *Pila.Pila)
 				Lista.Insertar_Final(estudiante.Estudiante, l)
 				//pila que guarda las acciones del admin
 				Pila.Agregar_Pila("Se aceptó estudiante", time.Now(), p)
-				//Persona.Pila_Logins(estudiante.Estudiante)
+
+				//creando pila de logins al estudiante aceptado
+				Persona.Pila_Logins(estudiante.Estudiante)
 
 				//actualizando json de estudiantes aceptos
 				JSON.Generar_JSON(l, "aceptados.json")
@@ -85,6 +87,9 @@ func Estudiantes_Pendientes(c *Cola.Cola, l *Lista.Lista_Enlazada, p *Pila.Pila)
 
 				//actualizando .png de estudiantes en espera
 				//Grafica_Esperando(c)
+
+				//grafica estudiantes aceptados
+				Grafica_Aceptados(l)
 
 				temp = temp.Siguiente
 				fmt.Println("Has aceptado al estudiante")
@@ -207,4 +212,15 @@ func Grafica_Acciones_Admin(p *Pila.Pila) {
 
 	Dot.WriteDotFile(Pila.Grafica(p), "acciones-admin.dot", path)
 	Dot.GeneratePNG("acciones-admin")
+}
+
+func Grafica_Aceptados(l *Lista.Lista_Enlazada){
+	path, error := os.Getwd()
+
+	if error != nil {
+		log.Println(error)
+	}
+
+	Dot.WriteDotFile(Lista.Grafica(l), "aceptados.dot", path)
+	Dot.GeneratePNG("aceptados")
 }
