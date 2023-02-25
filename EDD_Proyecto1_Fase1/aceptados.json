@@ -1,0 +1,20 @@
+[
+  {
+    "nombre": "Leonardo Martinez",
+    "carnet": 201780044,
+    "password": "leo1234",
+    "Carpeta_Raiz": "/"
+  },
+  {
+    "nombre": "Jimena Hernández",
+    "carnet": 201803877,
+    "password": "qwerty",
+    "Carpeta_Raiz": "/"
+  },
+  {
+    "nombre": "Mónica Larios",
+    "carnet": 202503877,
+    "password": "monihola",
+    "Carpeta_Raiz": "/"
+  }
+]

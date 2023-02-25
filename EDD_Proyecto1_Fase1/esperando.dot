@@ -1,0 +1,23 @@
+digraph G {
+label="Estudiantes en Espera"
+node[shape=rectangle, style=filled, color=lightsalmon];
+rankdir=LR;
+NODO0[label="Carnet: 201780044
+Nombre: Leonardo Martinez"];
+NODO1[label="Carnet: 201709018
+Nombre: Cristian Suy"];
+NODO2[label="Carnet: 201403877
+Nombre: Ebany Larios"];
+NODO3[label="Carnet: 201803877
+Nombre: Jimena Hernández"];
+NODO4[label="Carnet: 202503877
+Nombre: Mónica Larios"];
+NODO5[label="Carnet: 200003877
+Nombre: Andrea Rodríguez"];
+NODO0->NODO1;
+NODO1->NODO2;
+NODO2->NODO3;
+NODO3->NODO4;
+NODO4->NODO5;
+
+}
