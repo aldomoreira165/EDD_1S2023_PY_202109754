@@ -63,7 +63,8 @@ func Grafica(pila *Pila) string {
 	return "digraph G {\n" +
 		"label=\"Acciones de Administrador\"\n"+
 		"node[shape=rectangle, style=filled, color=lightsalmon];\n" +
-		"rankdir=LR;\n" +
+		"edge [style=invis];"+
+		"rankdir=TB;\n" +
 		nodos + // NODOS
 		conexiones + // CONEXIONES
 		"\n}"

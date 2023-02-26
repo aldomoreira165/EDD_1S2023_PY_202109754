@@ -1,8 +1,0 @@
-digraph G {
-label="Estudiantes en Espera"
-node[shape=rectangle, style=filled, color=lightsalmon];
-rankdir=LR;
-NODO0[label="Carnet: 3000000000
-Nombre: aldo moreira"];
-
-}

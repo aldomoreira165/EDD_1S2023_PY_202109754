@@ -119,9 +119,6 @@ func Grafica(lista *Lista_Enlazada) string {
 	}
 	cadena_rank += "}\n"
 
-	//creando enlaces con listas de logins
-
-
 	return "digraph G {\n" +
 		"label=\"Estudiantes Aceptados\"\n"+
 		"node[shape=rectangle, style=filled, color=lightsalmon];\n" +
