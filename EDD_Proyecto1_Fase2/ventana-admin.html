@@ -23,7 +23,8 @@
                         <div id="area-botones-admin" class="row row-cols-3 row-cols-sm-3 row-cols-md-1">
                             <button type="button" class="boton grande">Mostrar Alumnos</button>
                             <button type="button" class="boton grande">Árbol de Estudiantes</button>
-                            <button type="button" class="boton grande">Carga Masiva</button>
+                            <button id="carga-masiva-btn" type="button" class="boton grande">Carga Masiva</button>
+                            <input type="file" id="input-carga-masiva" style="display:none;">
                         </div>
                     </div>
                     <div id="tabla-estudiantes-admnin" class="col-sm-12 col-md-9">
@@ -35,27 +36,10 @@
                                     <th scope="col">#</th>
                                     <th scope="col">Carnet</th>
                                     <th scope="col">Nombre</th>
-                                    <th scope="col">Handle</th>
                                   </tr>
                                 </thead>
-                                <tbody>
-                                  <tr>
-                                    <th scope="row">1</th>
-                                    <td>Mark</td>
-                                    <td>Otto</td>
-                                    <td>@mdo</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">2</th>
-                                    <td>Jacob</td>
-                                    <td>Thornton</td>
-                                    <td>@fat</td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">3</th>
-                                    <td colspan="2">Larry the Bird</td>
-                                    <td>@twitter</td>
-                                  </tr>
+                                <tbody id="cuerpo-tabla-estudiantes">
+                                  
                                 </tbody>
                               </table>
                         </div>
@@ -65,5 +49,6 @@
         </div>
     </div>
     <script src="assets/js/bootstrap.min.js"></script>
+    <script src="assets/js/app-admin.js"></script>
 </body>
 </html>
