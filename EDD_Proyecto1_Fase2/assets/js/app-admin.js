@@ -2,7 +2,8 @@
 const botonCargaMasiva = document.getElementById("carga-masiva-btn");
 const inputCargaMasiva = document.getElementById("input-carga-masiva");
 const cuerpoTablaEstudiantes = document.getElementById("cuerpo-tabla-estudiantes");
-var estudiantesAceptados = [];
+
+//creando arbol
 
 //carga masiva
 
@@ -19,6 +20,7 @@ inputCargaMasiva.addEventListener("change", function(){
         //pruebas para mostrar estudiantes en la tabla
         let numeroFila = 1;
         jsonData.forEach(function(obj){
+
             const fila = document.createElement("tr");
             fila.innerHTML += `
                 <th scope="row">${numeroFila}</th>
