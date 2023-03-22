@@ -35,6 +35,11 @@
     color: #fff;
 }
 
+.boton a{
+    text-decoration: none;
+    color: black;
+}
+
 /*seccion de usuario*/
 #container-datos-usuario{
     margin-top: 10px;
