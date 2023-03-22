@@ -1,6 +1,6 @@
 
-let = nodos = "";
-let = conexiones = "";
+let nodos = "";
+let conexiones = "";
 
 class NodoAVL {
     constructor(estudiante) {
@@ -15,7 +15,8 @@ class ArbolAVL {
     constructor() {
         this.raiz = null;
     }
-    //obteniendo la altura del nodo
+    
+    //funciones generales
     _obtenerAltura(nodo) {
         if (nodo == null) {
             return -1;
@@ -39,6 +40,7 @@ class ArbolAVL {
         return this._obtenerAltura(nodo.izquierdo) - this._obtenerAltura(nodo.derecho);
     }
 
+    //rotaciones
     _rotacionIzquierda(nodo) {
         var izquierdo = nodo.izquierdo;
         
@@ -101,44 +103,32 @@ class ArbolAVL {
                 }
             }
         } else {
-            console.log("El elemento ya existe en el árbol");
+            alert("El elemento ya existe en el árbol");
         }
         nodo.altura = this._obtenerAlturaMaxima(this._obtenerAltura(nodo.izquierdo), this._obtenerAltura(nodo.derecho))+1;
         return nodo;
     }
 
-    graficar() {
-        let conexiones = "";
-        let nodos = "";
-        this._graficarRecursivo(this.raiz);
-        console.log(nodos, conexiones);
+
+    graficarInOrden() {
+        console.log("demtro")
+        conexiones = "";
+        nodos = "";
+        this._graficarInOrdenRecursivo(this.raiz);
+        return nodos + conexiones;
     }
 
-    _graficarRecursivo(nodo) {
+    _graficarInOrdenRecursivo(nodo) {
         if (nodo.izquierdo != null) {
-            this._graficarRecursivo(nodo.izquierdo);
-            conexiones += `${nodo.valor} -> S${nodo.izquierdo.valor}\n`
+            this._graficarInOrdenRecursivo(nodo.izquierdo);
+            conexiones += `S_${nodo.estudiante.carnet} -> S_${nodo.izquierdo.estudiante.carnet};\n`;
         }
-        nodos += `S${nodo.valor}[label = ${nodo.valor}];`;
+        nodos += `S_${nodo.estudiante.carnet}[label = "${nodo.estudiante.nombre}"];\n`;
         if (nodo.derecho != null) {
-            this._graficarRecursivo(nodo.derecho);
-            conexiones += `S${nodo.valor} -> S${nodo.derecho.valor}\n`;
+            this._graficarInOrdenRecursivo(nodo.derecho);
+            conexiones += `S_${nodo.estudiante.carnet} -> S_${nodo.derecho.estudiante.carnet};\n`;
         }
     }
 }
 
-let estudiante = require('./estudiante')
-
-let est1 = new estudiante.Estudiante(8318054, "Hugo30");
-let est2 = new estudiante.Estudiante(199919737, "Williams42");
-let est3 = new estudiante.Estudiante(201700792, "Dennis28");
-let est4 = new estudiante.Estudiante(1, "Denn");
-let est5 = new estudiante.Estudiante(22, "Dino");
-
-let arbol_avl = new ArbolAVL();
-arbol_avl.insertar(est1);
-arbol_avl.insertar(est2);
-arbol_avl.insertar(est3);
-arbol_avl.insertar(est4);
-arbol_avl.insertar(est5);
-console.log("hola")
+export {ArbolAVL};
