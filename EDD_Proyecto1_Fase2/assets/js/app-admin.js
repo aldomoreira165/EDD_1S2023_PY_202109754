@@ -4,7 +4,10 @@ import { ArbolAVL } from "./arbol-avl.js";
 
 const botonCargaMasiva = document.getElementById("carga-masiva-btn");
 const botonMostrarAlumnos = document.getElementById("mostrar-alumnos-btn");
-const botonGraficar = document.getElementById("boton-graficar");
+const botonGraficar = document.getElementById("graficar-btn");
+const botonInOrden = document.getElementById("radio-in");
+const botonPreOrden = document.getElementById("radio-pre");
+const botonPostOrden = document.getElementById("radio-post");
 const inputCargaMasiva = document.getElementById("input-carga-masiva");
 const cuerpoTablaEstudiantes = document.getElementById("cuerpo-tabla-estudiantes");
 
@@ -12,13 +15,12 @@ let arbol_estudiantes = new ArbolAVL();
 let arreglo_estudiantes = [];
 let cambios_alumnos = false;
 
-//agregando el arbol de estudiantes al local storage
-
 //insertando alumnos
 botonCargaMasiva.addEventListener("click", function(){
     inputCargaMasiva.click();
 })
 
+//carga de alumnos a LS 
 inputCargaMasiva.addEventListener("change", function(){
     const file = this.files[0];
     const reader = new FileReader();
@@ -31,10 +33,19 @@ inputCargaMasiva.addEventListener("change", function(){
 
             const jsonData = JSON.parse(contents);
             jsonData.alumnos.forEach(function(alumno){
-                let nuevoEstudiante = new Estudiante(alumno.carnet, alumno.nombre, alumno.contraseña);
+                let nuevoEstudiante = new Estudiante(alumno.carnet, alumno.nombre, alumno.password);
                 arbol_estudiantes.insertar(nuevoEstudiante);
                 arreglo_estudiantes.push(nuevoEstudiante);
             });
+
+            //notificando que la carga se realizó con éxito
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: '¡Carga de alumnos realizada con éxito!',
+                showConfirmButton: false,
+                timer: 1500
+              })
 
             //agregando el arbol nuevamente al local storage
             localStorage.setItem("arbolEstudiantesLS", JSON.stringify(arbol_estudiantes))
@@ -55,16 +66,14 @@ botonMostrarAlumnos.addEventListener("click", function(){
             text: 'No has cargado nuevos alumnos.',
           })
     }else{
-        let numeroFila = 1;
         arreglo_estudiantes.forEach(est => {
             const fila = document.createElement("tr");
             fila.innerHTML += `
-                    <th scope="row">${numeroFila}</th>
-                    <th>${est.carnet}</th>
-                    <th>${est.nombre}</th>
+                    <td>${est.carnet}</td>
+                    <td>${est.nombre}</td>
+                    <td>${est.password}</td>
                 `;
             cuerpoTablaEstudiantes.append(fila);
-            numeroFila += 1;
         })
         cambios_alumnos = false;
     }
@@ -72,13 +81,38 @@ botonMostrarAlumnos.addEventListener("click", function(){
 
 //graficar
 botonGraficar.addEventListener("click", function(){
-    const img1 = document.getElementById("img-in-orden");
+    const contenedorImagen = document.getElementById("container-arbol-img");
     let url = 'https://quickchart.io/graphviz?graph=';
-    let body = `digraph G{ \nlabel = "Recorrido In-Orden";\n ${arbol_estudiantes.graficarInOrden()} }`;
+    let body = `digraph G{${arbol_estudiantes.graficar()} }`;
     console.log(body);
-    img1.setAttribute("src",url + body);
+    contenedorImagen.setAttribute("src",url + body);
     //$("#img-in-orden").attr("src", url + body);
 })
+
+//métodos para cambiar el recorrido y la tabla
+
+botonInOrden.addEventListener("change", function(){
+    if(this.checked){
+        const tablaEstudiantes = document.getElementById('tabla-estudiantes').querySelector('tbody');
+        tablaEstudiantes.innerHTML = arbol_estudiantes.inOrder(); 
+    }
+});
+
+botonPreOrden.addEventListener("change", function(){
+    if(this.checked){
+        const tablaEstudiantes = document.getElementById('tabla-estudiantes').querySelector('tbody');
+        tablaEstudiantes.innerHTML = arbol_estudiantes.preOrder(); 
+    }
+});
+
+botonPostOrden.addEventListener("change", function(){
+    if(this.checked){
+        const tablaEstudiantes = document.getElementById('tabla-estudiantes').querySelector('tbody');
+        tablaEstudiantes.innerHTML = arbol_estudiantes.postOrder(); 
+    }
+});
+
+
 
 
 

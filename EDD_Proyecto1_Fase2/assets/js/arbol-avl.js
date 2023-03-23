@@ -110,24 +110,95 @@ class ArbolAVL {
     }
 
 
-    graficarInOrden() {
+    graficar() {
         console.log("demtro")
         conexiones = "";
         nodos = "";
-        this._graficarInOrdenRecursivo(this.raiz);
+        this._graficarRecursivo(this.raiz);
         return nodos + conexiones;
     }
 
-    _graficarInOrdenRecursivo(nodo) {
+    _graficarRecursivo(nodo) {
         if (nodo.izquierdo != null) {
-            this._graficarInOrdenRecursivo(nodo.izquierdo);
+            this._graficarRecursivo(nodo.izquierdo);
             conexiones += `S_${nodo.estudiante.carnet} -> S_${nodo.izquierdo.estudiante.carnet};\n`;
         }
         nodos += `S_${nodo.estudiante.carnet}[label = "${nodo.estudiante.nombre}"];\n`;
         if (nodo.derecho != null) {
-            this._graficarInOrdenRecursivo(nodo.derecho);
+            this._graficarRecursivo(nodo.derecho);
             conexiones += `S_${nodo.estudiante.carnet} -> S_${nodo.derecho.estudiante.carnet};\n`;
         }
+    }
+
+    //metodos para recorrer el arbol
+    
+    inOrder(){
+        let html = this._inOrderRecursive(this.raiz);
+        return html;
+    }
+
+    _inOrderRecursive(nodo){
+        let fila = "";
+        if(nodo.izquierdo != null){
+            fila += this._inOrderRecursive(nodo.izquierdo);
+        }
+        fila += `
+        <tr>
+            <th>${nodo.estudiante.carnet}</th>
+            <td>${nodo.estudiante.nombre}</td>
+            <td>${nodo.estudiante.password}</td>
+        </tr>
+        `;
+        if(nodo.derecho != null){
+            fila += this._inOrderRecursive(nodo.derecho);
+        }
+        return fila;
+    }
+
+    preOrder(){
+        let html = this._preOrderRecursive(this.raiz);
+        return html;
+    }
+
+    _preOrderRecursive(nodo){
+        let fila = "";
+        fila += `
+        <tr>
+            <th>${nodo.estudiante.carnet}</th>
+            <td>${nodo.estudiante.nombre}</td>
+            <td>${nodo.estudiante.password}</td>
+        </tr>
+        `;
+        if(nodo.izquierdo != null){
+            fila += this._inOrderRecursive(nodo.izquierdo);
+        }
+        if(nodo.derecho != null){
+            fila += this._inOrderRecursive(nodo.derecho);
+        }
+        return fila;
+    }
+
+    postOrder(){
+        let html = this._postOrderRecursive(this.raiz);
+        return html;
+    }
+
+    _postOrderRecursive(nodo){
+        let fila = "";
+        if(nodo.izquierdo != null){
+            fila += this._inOrderRecursive(nodo.izquierdo);
+        }
+        if(nodo.derecho != null){
+            fila += this._inOrderRecursive(nodo.derecho);
+        }
+        fila += `
+        <tr>
+            <th>${nodo.estudiante.carnet}</th>
+            <td>${nodo.estudiante.nombre}</td>
+            <td>${nodo.estudiante.password}</td>
+        </tr>
+        `;
+        return fila;
     }
 }
 
