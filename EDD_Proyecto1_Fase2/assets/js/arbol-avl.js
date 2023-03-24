@@ -14,9 +14,15 @@ class NodoAVL {
 class ArbolAVL {
     constructor() {
         this.raiz = null;
+        this.tamaño = 0;
     }
     
     //funciones generales
+
+    obtenerTamaño(){
+        return this.tamaño;
+    }
+
     _obtenerAltura(nodo) {
         if (nodo == null) {
             return -1;
@@ -78,6 +84,7 @@ class ArbolAVL {
     // Función para insertar un nodo en el árbol AVL
     insertar(estudiante) {
         this.raiz = this._agregar(estudiante, this.raiz);
+        this.tamaño += 1;
         console.log(`Se insertó: ${estudiante.carnet}`);
     }
 
@@ -103,7 +110,7 @@ class ArbolAVL {
                 }
             }
         } else {
-            alert("El elemento ya existe en el árbol");
+            console.log("El elemento ya existe en el árbol");
         }
         nodo.altura = this._obtenerAlturaMaxima(this._obtenerAltura(nodo.izquierdo), this._obtenerAltura(nodo.derecho))+1;
         return nodo;
@@ -199,6 +206,22 @@ class ArbolAVL {
         </tr>
         `;
         return fila;
+    }
+
+    //buscando 
+
+    buscarEstudiante(valorBuscado){
+        return this._buscarNodo(this.raiz, valorBuscado);
+    }
+
+    _buscarNodo(nodo, valorBuscado){
+        if(!nodo || nodo.estudiante.carnet === valorBuscado){
+            return nodo;
+        }else if(valorBuscado < nodo.estudiante.carnet){
+            return this._buscarNodo(nodo.izquierdo, valorBuscado);
+        }else{
+            return this._buscarNodo(nodo.derecho, valorBuscado);
+        }
     }
 }
 

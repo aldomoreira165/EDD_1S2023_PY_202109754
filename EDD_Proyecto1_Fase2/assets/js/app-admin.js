@@ -140,6 +140,23 @@ botonSalir.addEventListener("click", function(){
     }
 })
 
+document.getElementById("aux-btn").addEventListener("click", function(){
+    /*//obteniendo el arbol avl, JSON.parse devuelve un obtejo de tipo ArbolAVL, lo de adentro devuelve un JSON
+    let info = localStorage.getItem("arbolEstudiantesLS");
+    let dataPersistence = JSON.parse(info);
+    console.log("***********data***********")
+    console.log(dataPersistence); 
+    console.log("**************************")
+    //manipulando la info
+    //insetando nuevo alumno
+    let nuevoEstudiante = new Estudiante(202109754, "Aldo Moreira", "hola123");
+    dataPersistence = dataPersistence.insertar(nuevoEstudiante);
+
+    //conviertiendo  el arbol actualizado en una cadena de texto JSON y luego se almacena en LS
+    let arbolActualzado = JSON.stringify(dataPersistence);
+    localStorage.setItem("arbolEstudiantesLS", arbolActualzado);*/
+})
+
 
 
 
