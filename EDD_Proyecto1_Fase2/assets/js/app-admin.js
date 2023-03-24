@@ -8,6 +8,7 @@ const botonGraficar = document.getElementById("graficar-btn");
 const botonInOrden = document.getElementById("radio-in");
 const botonPreOrden = document.getElementById("radio-pre");
 const botonPostOrden = document.getElementById("radio-post");
+const botonSalir = document.getElementById("bnt-logout");
 const inputCargaMasiva = document.getElementById("input-carga-masiva");
 const cuerpoTablaEstudiantes = document.getElementById("cuerpo-tabla-estudiantes");
 
@@ -111,6 +112,33 @@ botonPostOrden.addEventListener("change", function(){
         tablaEstudiantes.innerHTML = arbol_estudiantes.postOrder(); 
     }
 });
+
+//log out 
+
+botonSalir.addEventListener("click", function(){
+    try {
+        Swal.fire({
+            title: '¿Estás seguro que deseas salir?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, estoy seguro!',
+            cancelButtonText: 'No'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire(
+                '¡Has salido!',
+                'Vuelve pronto.',
+                'success'
+              )
+              window.location.href = "../index.html";
+            }
+          })
+    } catch (error) {
+        console.error("Ha ocurrido un error al hacer logout", error);
+    }
+})
 
 
 
