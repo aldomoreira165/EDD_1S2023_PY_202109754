@@ -215,7 +215,7 @@ class ArbolAVL {
     }
 
     _buscarNodo(nodo, valorBuscado){
-        if(!nodo || nodo.estudiante.carnet === valorBuscado){
+        if(!nodo || nodo.estudiante.carnet == valorBuscado){
             return nodo;
         }else if(valorBuscado < nodo.estudiante.carnet){
             return this._buscarNodo(nodo.izquierdo, valorBuscado);

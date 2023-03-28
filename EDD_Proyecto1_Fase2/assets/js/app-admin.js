@@ -10,11 +10,9 @@ const botonPreOrden = document.getElementById("radio-pre");
 const botonPostOrden = document.getElementById("radio-post");
 const botonSalir = document.getElementById("bnt-logout");
 const inputCargaMasiva = document.getElementById("input-carga-masiva");
-const cuerpoTablaEstudiantes = document.getElementById("cuerpo-tabla-estudiantes");
 
 let arbol_estudiantes = new ArbolAVL();
 let arreglo_estudiantes = [];
-let cambios_alumnos = false;
 
 //insertando alumnos
 botonCargaMasiva.addEventListener("click", function(){
@@ -60,7 +58,23 @@ inputCargaMasiva.addEventListener("change", function(){
 //mostrando alumnos
 botonMostrarAlumnos.addEventListener("click", function(){
 
-    if(cambios_alumnos == false){
+    if (localStorage.getItem('arbolEstudiantesLS')){
+        //obteniendo los alumnos desde el LS
+        let temp = localStorage.getItem('arbolEstudiantesLS');
+        arbol_estudiantes.raiz = JSON.parse(temp).raiz;
+
+        //graficando en la tabla
+        const tablaEstudiantes = document.getElementById('tabla-estudiantes').querySelector('tbody'); 
+        tablaEstudiantes.innerHTML = arbol_estudiantes.inOrder();
+    }else{
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No existen alumnos en el sistema.',
+        })  
+    }
+
+    /*if(cambios_alumnos == false){
         Swal.fire({
             icon: 'error',
             title: 'Error',
@@ -77,21 +91,31 @@ botonMostrarAlumnos.addEventListener("click", function(){
             cuerpoTablaEstudiantes.append(fila);
         })
         cambios_alumnos = false;
-    }
+    }*/
 });
 
 //graficar
 botonGraficar.addEventListener("click", function(){
-    const contenedorImagen = document.getElementById("container-arbol-img");
-    let url = 'https://quickchart.io/graphviz?graph=';
-    let body = `digraph G{${arbol_estudiantes.graficar()} }`;
-    console.log(body);
-    contenedorImagen.setAttribute("src",url + body);
-    //$("#img-in-orden").attr("src", url + body);
+
+    if (localStorage.getItem('arbolEstudiantesLS')){
+        //recuperando datos desde el lS
+        let temp = localStorage.getItem('arbolEstudiantesLS');
+        arbol_estudiantes.raiz = JSON.parse(temp).raiz;
+
+        const contenedorImagen = document.getElementById("container-arbol-img");
+        let url = 'https://quickchart.io/graphviz?graph=';
+        let body = `digraph G{${arbol_estudiantes.graficar()} }`;
+        contenedorImagen.setAttribute("src",url + body);
+    }else{
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No existen alumnos en el sistema.',
+        })  
+    }
 })
 
 //métodos para cambiar el recorrido y la tabla
-
 botonInOrden.addEventListener("change", function(){
     if(this.checked){
         const tablaEstudiantes = document.getElementById('tabla-estudiantes').querySelector('tbody');
@@ -140,22 +164,6 @@ botonSalir.addEventListener("click", function(){
     }
 })
 
-document.getElementById("aux-btn").addEventListener("click", function(){
-    /*//obteniendo el arbol avl, JSON.parse devuelve un obtejo de tipo ArbolAVL, lo de adentro devuelve un JSON
-    let info = localStorage.getItem("arbolEstudiantesLS");
-    let dataPersistence = JSON.parse(info);
-    console.log("***********data***********")
-    console.log(dataPersistence); 
-    console.log("**************************")
-    //manipulando la info
-    //insetando nuevo alumno
-    let nuevoEstudiante = new Estudiante(202109754, "Aldo Moreira", "hola123");
-    dataPersistence = dataPersistence.insertar(nuevoEstudiante);
-
-    //conviertiendo  el arbol actualizado en una cadena de texto JSON y luego se almacena en LS
-    let arbolActualzado = JSON.stringify(dataPersistence);
-    localStorage.setItem("arbolEstudiantesLS", arbolActualzado);*/
-})
 
 
 
