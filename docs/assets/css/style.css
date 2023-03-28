@@ -8,11 +8,27 @@
 }
 
 #nav{
+    display: grid;
+    grid-template-columns: 90% 10%;
+    background-color: #40414a;
+    height: 80px;
+}
+
+#nombre-sitio{
+    margin-left: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #40414a;
-    height: 80px;
+}
+
+#log-out{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#log-out a:active{
+    color: #ececec
 }
 
 #nav #nombre-sitio a{
@@ -96,6 +112,12 @@
     margin: 10px;
 }
 
+/*estilos boton salir*/
+#log-out a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 35px;
+}
 
 /*Media queries*/
 
