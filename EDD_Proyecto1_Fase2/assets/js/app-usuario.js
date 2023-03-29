@@ -1,5 +1,6 @@
 
 import { arbolMulticamino } from "./arbol-multicamino.js";
+import { ArbolAVL } from "./arbol-avl.js";
 
 const contenedorCarpetas = document.getElementById("carpetas-container");
 const etiquetaNombre = document.getElementById("saludo-usuario");
@@ -9,12 +10,27 @@ const botonSalir = document.getElementById("bnt-logout");
 
 let arbolCarpetas = new arbolMulticamino();
 
-function saludoUsuario() {
+//función que se ejecuta al cargar la pagina
+function inicioPagina() {
   let usuario = JSON.parse(localStorage.getItem("estudianteLog"));
   etiquetaNombre.innerHTML = `Bienvenido ${usuario.nombre}`
+
+  //mostrando las carpetas del usuario recien loggeado
+  if (usuario.carpeta != null) {
+    let carpetasLoggeado = new arbolMulticamino();
+    let temp = JSON.parse(localStorage.getItem("estudianteLog")).carpeta;
+
+    carpetasLoggeado.root = temp.root;
+    
+    contenedorCarpetas.innerHTML = "";
+    contenedorCarpetas.innerHTML = (carpetasLoggeado.getHTML("/"));
+
+    //actualizando el arbol carpetas 
+    arbolCarpetas.root = temp.root;
+  }
 }
 
-botonCrearCarpeta.addEventListener("click", function(){
+botonCrearCarpeta.addEventListener("click", function () {
   let nombreCarpeta = "";
   Swal.fire({
     title: 'Ingresa el nombre de la carpeta',
@@ -51,8 +67,15 @@ botonCrearCarpeta.addEventListener("click", function(){
   })
 });
 
-function crearCarpeta(nombreCarpeta, ruta){
+function crearCarpeta(nombreCarpeta, ruta) {
+
+  //obteniendo el arbol de carpetas del localstorage
   arbolCarpetas.insert(nombreCarpeta, ruta);
+
+  //actulizando carpetas en el arbolAVL
+  actualizarCarpetas();
+
+  //alerta
   Swal.fire({
     position: 'center',
     icon: 'success',
@@ -90,4 +113,17 @@ botonSalir.addEventListener("click", function () {
   }
 })
 
-window.onload = saludoUsuario;
+function actualizarCarpetas(){
+  let arbol = new ArbolAVL();
+  let temp = localStorage.getItem('arbolEstudiantesLS');
+  let usuario = JSON.parse(localStorage.getItem("estudianteLog"));
+
+  arbol.raiz = JSON.parse(temp).raiz;
+
+  arbol.modificarCarpetas(usuario.carnet,arbolCarpetas);
+
+  localStorage.setItem('arbolEstudiantesLS', JSON.stringify(arbol));
+}
+
+/*actualizar datos*/
+window.onload = inicioPagina;

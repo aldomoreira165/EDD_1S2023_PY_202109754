@@ -74,7 +74,7 @@ class arbolMulticamino {
         node.children.map(child => {
             code += `<div id="carpeta">
                         <div id="img-carpeta">
-                            <a href=""><i class="fas fa-folder"></i></a>
+                            <a><i class="fas fa-folder"></i></a>
                          </div>
                         <div id="nombre-carpeta">
                             <p>${child.folderName}</p>
