@@ -119,6 +119,35 @@
     font-size: 35px;
 }
 
+/*area de carpetas*/
+#carpetas-container{
+    background-color: #ececec;
+    border-radius: 5px;
+}
+
+#carpeta a{
+    font-size: 70px;
+    color: #DBC430;
+}
+
+#img-carpeta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#nombre-carpeta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#carpeta:hover{
+    color: #ececec;
+    background-color:#40414a;
+    cursor: pointer;
+}
+
 /*Media queries*/
 
 @media screen and (min-width: 768px){

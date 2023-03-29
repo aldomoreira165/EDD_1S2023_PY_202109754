@@ -223,6 +223,13 @@ class ArbolAVL {
             return this._buscarNodo(nodo.derecho, valorBuscado);
         }
     }
+
+    modificarCarpetas(carnet, carpetas){
+        const nodo = this.buscarEstudiante(carnet);
+        if(!nodo) return false;
+        nodo.estudiante.carpeta = carpetas;
+        return true;
+    }
 }
 
 export {ArbolAVL};

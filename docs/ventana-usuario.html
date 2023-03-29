@@ -25,11 +25,11 @@
                     <div id="opciones-usuario" class="col-sm-12 col-md-3">
                         <div id="container-datos-usuario" class="col-12">
                             <div id="container-texto-datos-usuario" class="col-12">
-                                <p id="saludo-usuario">Bienvenido 202109754</p>
+                                <p id="saludo-usuario"></p>
                             </div>
                             <div id="container-botones-datos-usuario" class="col-12">
                                 <div id="container-boton">
-                                    <button type="button" class="boton pequeño">Crear Carpeta</button>
+                                    <button id="btn-crear-carpeta" type="button" class="boton pequeño">Crear Carpeta</button>
                                 </div>
                                 <div id="container-boton">
                                     <button type="button" class="boton pequeño eliminar">Eliminar Carpeta</button>
@@ -46,12 +46,14 @@
                         <div id="barra-busqueda" class="col-12">
                             <nav class="navbar navbar-light bg-light">
                                 <div class="container-fluid">
-                                  <form class="d-flex">
-                                    <input class="form-control me-2" type="search" placeholder="¿Buscas una carpeta?" aria-label="Search">
-                                    <button class="btn btn-outline-success" type="submit">Buscar</button>
+                                  <form class="d-flex col-12">
+                                    <input id="input-busqueda" class="form-control me-2" type="search" value="/" aria-label="Search" disabled>
                                   </form>
                                 </div>
                             </nav>
+                            <div id="carpetas-container" class="row row-cols-3 row-cols-sm-4 row-cols-md-5">
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -59,7 +61,7 @@
         </div>
     </div>
     <script src="assets/js/bootstrap.min.js"></script>
-    <script src="assets/js/app-usuario.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>4
+    <script src="assets/js/app-usuario.js" type="module"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
