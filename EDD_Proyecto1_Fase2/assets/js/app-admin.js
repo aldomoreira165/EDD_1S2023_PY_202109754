@@ -28,7 +28,6 @@ inputCargaMasiva.addEventListener("change", function(){
         try {
             //vaciando el arreglo de estudiantes
             arreglo_estudiantes = [];
-            cambios_alumnos = true;
 
             const jsonData = JSON.parse(contents);
             jsonData.alumnos.forEach(function(alumno){
