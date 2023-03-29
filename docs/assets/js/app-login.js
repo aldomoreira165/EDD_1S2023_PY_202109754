@@ -21,7 +21,11 @@ botonIniciar.addEventListener('submit', function (event) {
         let buscandoEstudiante =  arbol.buscarEstudiante(campoCarnet);
 
         if (buscandoEstudiante != null){
+<<<<<<< HEAD
             let estudianteLoggeado = new Estudiante(buscandoEstudiante.estudiante.carnet,buscandoEstudiante.estudiante.nombre, buscandoEstudiante.estudiante.password)
+=======
+            let estudianteLoggeado = new Estudiante(buscandoEstudiante.estudiante.carnet,buscandoEstudiante.estudiante.nombre, buscandoEstudiante.estudiante.password, buscandoEstudiante.estudiante.carpeta)
+>>>>>>> feature/usuario
             if(campoPassword == estudianteLoggeado.password){
                 localStorage.setItem('estudianteLog', JSON.stringify(estudianteLoggeado));
                 window.location.href = "../ventana-usuario.html";

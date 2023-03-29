@@ -1,9 +1,9 @@
 class Estudiante{
-    constructor(carnet, nombre, password){
+    constructor(carnet, nombre, password, carpeta){
         this.carnet = carnet;
         this.nombre = nombre;
         this.password = password;
-        this.carpeta = null;
+        this.carpeta = carpeta;
     }
 }
 
