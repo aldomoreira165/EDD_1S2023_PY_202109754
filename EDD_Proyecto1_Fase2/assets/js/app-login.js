@@ -11,7 +11,7 @@ botonIniciar.addEventListener('submit', function (event) {
     let campoPassword = document.querySelector('#password').value;
 
     if (campoCarnet == "Admin" && campoPassword == "Admin") {
-        window.location.href = "../ventana-admin.html";
+        window.location.href = "./EDD_Proyecto1_Fase2/ventana-admin.html";
     } else {
         let arbol = new ArbolAVL();
 
@@ -24,7 +24,7 @@ botonIniciar.addEventListener('submit', function (event) {
             let estudianteLoggeado = new Estudiante(buscandoEstudiante.estudiante.carnet,buscandoEstudiante.estudiante.nombre, buscandoEstudiante.estudiante.password, buscandoEstudiante.estudiante.carpeta)
             if(campoPassword == estudianteLoggeado.password){
                 localStorage.setItem('estudianteLog', JSON.stringify(estudianteLoggeado));
-                window.location.href = "../ventana-usuario.html";
+                window.location.href = "./EDD_Proyecto1_Fase2/ventana-usuario.html";
             }else{
                 Swal.fire({
                     icon: 'error',
