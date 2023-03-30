@@ -19,6 +19,9 @@ class arbolMulticamino {
         let fatherNode = this._getFolder(fatherPath);
 
         if (fatherNode) {
+            if (fatherNode.children.some(child => child.folderName == folderName)) {
+                newNode.folderName = "Copia " + folderName;
+            }
             this.size += 1;
             newNode.id = this.size;
             fatherNode.children.push(newNode);
