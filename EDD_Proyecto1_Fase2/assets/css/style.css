@@ -125,7 +125,7 @@
     border-radius: 5px;
 }
 
-#carpeta a{
+#img-carpeta a{
     font-size: 70px;
     color: #DBC430;
 }
@@ -142,9 +142,24 @@
     justify-content: center;
 }
 
-#carpeta:hover{
+.btnCarpeta:hover{
     color: #ececec;
     background-color:#40414a;
+    cursor: pointer;
+}
+
+/*Boton retorno*/
+#container-retornar{
+    border-radius: 5px;
+    background-color: #40414a;
+}
+
+#boton-retornar{
+    font-size: 30px;
+    color: #fff;
+}
+
+#boton-retornar:hover{
     cursor: pointer;
 }
 

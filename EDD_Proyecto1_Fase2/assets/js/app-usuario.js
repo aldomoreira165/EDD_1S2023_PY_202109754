@@ -6,6 +6,7 @@ const contenedorCarpetas = document.getElementById("carpetas-container");
 const etiquetaNombre = document.getElementById("saludo-usuario");
 const barraRuta = document.getElementById("input-busqueda");
 const botonCrearCarpeta = document.getElementById("btn-crear-carpeta");
+const botonRetornar = document.getElementById("boton-retornar");
 const botonSalir = document.getElementById("bnt-logout");
 
 let arbolCarpetas = new arbolMulticamino();
@@ -27,9 +28,13 @@ function inicioPagina() {
 
     //actualizando el arbol carpetas 
     arbolCarpetas.root = temp.root;
+
+    //actualizando los botones carpeta
+    actualizarBotonesCarpetas();
   }
 }
 
+//funcion para crear una carpeta
 botonCrearCarpeta.addEventListener("click", function () {
   let nombreCarpeta = "";
   Swal.fire({
@@ -67,6 +72,41 @@ botonCrearCarpeta.addEventListener("click", function () {
   })
 });
 
+//funcion para navegar entre carpetas
+
+function actualizarBotonesCarpetas() {
+  let botonesCarpetas = document.querySelectorAll(".btnCarpeta");
+
+  botonesCarpetas.forEach(boton => {
+      boton.addEventListener('click', navegarEntreCarpetas)
+  });
+} 
+
+function navegarEntreCarpetas(e){
+  const nombre = e.currentTarget.id;
+  entrarCarpeta(nombre);
+}
+
+function entrarCarpeta(folderName){
+  let path = barraRuta.value;
+  let curretPath = path == '/'? path + folderName : path + "/"+ folderName;
+  barraRuta.value = curretPath;
+  contenedorCarpetas.innerHTML = "";
+  contenedorCarpetas.innerHTML = (arbolCarpetas.getHTML(curretPath))
+  actualizarBotonesCarpetas();
+}
+
+//funcion para retornar al inicio 
+
+botonRetornar.addEventListener("click", function(){
+  barraRuta.value = "/";
+  contenedorCarpetas.innerHTML = "";
+  contenedorCarpetas.innerHTML = (arbolCarpetas.getHTML("/"))
+  actualizarBotonesCarpetas();
+})
+
+//funcion para crear carpetas
+
 function crearCarpeta(nombreCarpeta, ruta) {
 
   //obteniendo el arbol de carpetas del localstorage
@@ -86,6 +126,9 @@ function crearCarpeta(nombreCarpeta, ruta) {
 
   contenedorCarpetas.innerHTML = "";
   contenedorCarpetas.innerHTML = (arbolCarpetas.getHTML(ruta))
+
+  //actualizando los botones carpeta
+  actualizarBotonesCarpetas();
 }
 
 botonSalir.addEventListener("click", function () {

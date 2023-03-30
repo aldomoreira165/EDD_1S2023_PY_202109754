@@ -72,7 +72,7 @@ class arbolMulticamino {
         let node = this._getFolder(path);
         let code = "";
         node.children.map(child => {
-            code += `<div id="carpeta">
+            code += `<div id="${child.folderName}" class="btnCarpeta">
                         <div id="img-carpeta">
                             <a><i class="fas fa-folder"></i></a>
                          </div>
