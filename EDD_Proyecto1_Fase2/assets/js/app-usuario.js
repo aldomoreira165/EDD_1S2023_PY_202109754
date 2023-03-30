@@ -6,6 +6,7 @@ const contenedorCarpetas = document.getElementById("carpetas-container");
 const etiquetaNombre = document.getElementById("saludo-usuario");
 const barraRuta = document.getElementById("input-busqueda");
 const botonCrearCarpeta = document.getElementById("btn-crear-carpeta");
+const botonEliminarCarpeta = document.getElementById("btn-eliminar-carpeta");
 const botonRetornar = document.getElementById("boton-retornar");
 const botonSalir = document.getElementById("bnt-logout");
 
@@ -71,6 +72,67 @@ botonCrearCarpeta.addEventListener("click", function () {
     }
   })
 });
+
+//funcion para eliminar carpetas
+botonEliminarCarpeta.addEventListener("click", function(){
+  let nombreCarpeta = "";
+  Swal.fire({
+    title: 'Ingresa el nombre de la carpeta a eliminar',
+    input: 'text',
+    input: 'text',
+    inputAttributes: {
+      autocapitalize: 'off'
+    },
+    showCancelButton: true,
+    confirmButtonText: 'Eliminar',
+    cancelButtonText: 'Cancelar',
+    showLoaderOnConfirm: true,
+    preConfirm: (login) => {
+      return fetch(`//api.github.com/users/${login}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText)
+          }
+          return response.json()
+        })
+        .catch(error => {
+          Swal.showValidationMessage(
+            `Request failed: ${error}`
+          )
+        })
+    },
+    allowOutsideClick: () => !Swal.isLoading()
+  }).then((result) => {
+    if (result.isConfirmed) {
+      nombreCarpeta = result.value.login;
+      let valorRuta = barraRuta.value;
+      eliminarCarpeta(nombreCarpeta, valorRuta);
+    }
+  })
+})
+
+function eliminarCarpeta(nombreCarpeta, ruta){
+  //obteniendo el arbol de carpetas del localstorage
+  arbolCarpetas.delete(nombreCarpeta, ruta);
+
+  //actulizando carpetas en el arbolAVL
+  actualizarCarpetas();
+
+  //alerta
+  Swal.fire({
+    position: 'center',
+    icon: 'success',
+    title: '¡Carpeta eliminada exitosamente!',
+    showConfirmButton: false,
+    timer: 1500
+  })
+
+  contenedorCarpetas.innerHTML = "";
+  contenedorCarpetas.innerHTML = (arbolCarpetas.getHTML(ruta))
+
+  //actualizando los botones carpeta
+  actualizarBotonesCarpetas();
+}
 
 //funcion para navegar entre carpetas
 

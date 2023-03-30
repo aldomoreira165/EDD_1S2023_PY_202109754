@@ -50,6 +50,25 @@ class arbolMulticamino {
         }
     }
 
+    delete(folderName, fatherPath) {
+        let parentNode = this._getFolder(fatherPath);
+        if (parentNode) {
+            let folderNode = parentNode.children.find(child => child.folderName === folderName);
+            if (folderNode) {
+                let index = parentNode.children.findIndex(child => child.id === folderNode.id);
+                parentNode.children.splice(index, 1);
+                // Actualizar los id de los nodos hermanos
+                for (let i = index; i < parentNode.children.length; i++) {
+                    parentNode.children[i].id -= 1;
+                }
+            } else {
+                console.log("No existe la carpeta")
+            }
+        } else {
+            console.log("No existe la ruta del padre")
+        }
+    }
+
     graph(){
         let nodes = "";
         let connections = "";
@@ -100,5 +119,6 @@ arbol.insert('Docu', '/');
 arbol.insert('Pruebas', '/Documentos');
 arbol.insert('Prueba1', '/Documentos/Pruebas');
 arbol.insert('Prueba2', '/Documentos/Pruebas');
+arbol.delete("Pruebas", "/Documentos");
 
 console.log(arbol.graph());*/
