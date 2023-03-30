@@ -103,7 +103,8 @@ botonGraficar.addEventListener("click", function(){
 
         const contenedorImagen = document.getElementById("container-arbol-img");
         let url = 'https://quickchart.io/graphviz?graph=';
-        let body = `digraph G{${arbol_estudiantes.graficar()} }`;
+        let body = `digraph G{node [shape=box]${arbol_estudiantes.graficar()} }`;
+        console.log(body);
         contenedorImagen.setAttribute("src",url + body);
     }else{
         Swal.fire({

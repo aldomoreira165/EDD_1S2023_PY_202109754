@@ -69,11 +69,11 @@ class arbolMulticamino {
         }
     }
 
-    graph(){
+    graph(fatherPath){
         let nodes = "";
         let connections = "";
 
-        let node = this.root;
+        let node = this._getFolder(fatherPath);
         let queue = [];
         queue.push(node);
         while(queue.length !== 0){

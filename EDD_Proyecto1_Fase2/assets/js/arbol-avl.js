@@ -130,7 +130,7 @@ class ArbolAVL {
             this._graficarRecursivo(nodo.izquierdo);
             conexiones += `S_${nodo.estudiante.carnet} -> S_${nodo.izquierdo.estudiante.carnet};\n`;
         }
-        nodos += `S_${nodo.estudiante.carnet}[label = "${nodo.estudiante.nombre}"];\n`;
+        nodos += `S_${nodo.estudiante.carnet}[label = "${nodo.estudiante.carnet}\\n ${nodo.estudiante.nombre}\\n Altura:${this._obtenerAltura(nodo)}"];\n`;
         if (nodo.derecho != null) {
             this._graficarRecursivo(nodo.derecho);
             conexiones += `S_${nodo.estudiante.carnet} -> S_${nodo.derecho.estudiante.carnet};\n`;

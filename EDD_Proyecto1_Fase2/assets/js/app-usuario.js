@@ -7,6 +7,8 @@ const etiquetaNombre = document.getElementById("saludo-usuario");
 const barraRuta = document.getElementById("input-busqueda");
 const botonCrearCarpeta = document.getElementById("btn-crear-carpeta");
 const botonEliminarCarpeta = document.getElementById("btn-eliminar-carpeta");
+const botonReporteCarpetas = document.getElementById("btn-reporte-carpetas");
+const botonReporteAcciones = document.getElementById("btn-reporte-acciones");
 const botonRetornar = document.getElementById("boton-retornar");
 const botonSalir = document.getElementById("bnt-logout");
 
@@ -34,6 +36,14 @@ function inicioPagina() {
     actualizarBotonesCarpetas();
   }
 }
+
+  //funcion para el reporte de carpetas
+  botonReporteCarpetas.addEventListener("click", function(){
+    const contenedorImagen = document.getElementById("container-arbol-img");
+    let url = 'https://quickchart.io/graphviz?graph=';
+    let body = `digraph G{${arbolCarpetas.graph(barraRuta.value)} }`;
+    contenedorImagen.setAttribute("src",url + body);
+  });
 
 //funcion para crear una carpeta
 botonCrearCarpeta.addEventListener("click", function () {
