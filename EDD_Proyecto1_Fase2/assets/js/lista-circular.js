@@ -4,14 +4,12 @@ class Nodo {
     constructor(accion) {
         this.accion = accion;
         this.siguiente = null;
-        this.anterior = null;
     }
 }
 
 class ListaCircular{
     constructor(){
         this.cabeza = null;
-        this.cola = null;
         this.largo = 0;
     }
 
@@ -19,14 +17,14 @@ class ListaCircular{
         const nodo = new Nodo(accion);
         if (!this.cabeza) {
             this.cabeza = nodo;
-            this.cola = nodo;
-            nodo.siguiente = nodo;
         }else{
-            this.cola.siguiente = nodo;
-            nodo.siguiente = this.cabeza;
-            this.cola = nodo;
+            let current = this.cabeza;
+            while (current.siguiente) {
+                current = current.siguiente;
+            }
+            current.siguiente = nodo;
         }
-        this.largo = 1;
+        this.largo += 1;
     }
 
     graficar() {
@@ -35,23 +33,25 @@ class ListaCircular{
         let nodos = "";
         let contador = 0;
 
-        while (temp.siguiente != this.cabeza) {
-            nodos += `S_${contador}[label=${temp.accion}];\n`;
+        while (temp.siguiente != null) {
+            nodos += `S_${contador}[label="${temp.accion}"];\n`;
             conexiones += `S_${contador}->`;
             temp = temp.siguiente;
             contador += 1;
         }
-        nodos += `S_${contador}[label=${temp.accion}];\n`;
+        nodos += `S_${contador}[label="${temp.accion}"];\n`;
         conexiones += `S_${contador}->S_0`;
-        console.log(nodos, conexiones)
-      }
+        return nodos + conexiones;
+    }
 }
 
-let lista = new ListaCircular()
+export {ListaCircular};
+
+/*let lista = new ListaCircular()
 
 lista.insertar("accion1");
 lista.insertar("accion2");
 lista.insertar("accion3");
 lista.insertar("accion4");
 
-lista.graficar();
+console.log(lista.graficar());*/

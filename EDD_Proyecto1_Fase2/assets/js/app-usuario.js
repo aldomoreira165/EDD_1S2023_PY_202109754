@@ -1,6 +1,7 @@
 
 import { arbolMulticamino } from "./arbol-multicamino.js";
 import { ArbolAVL } from "./arbol-avl.js";
+import { ListaCircular } from "./lista-circular.js";
 
 const contenedorCarpetas = document.getElementById("carpetas-container");
 const etiquetaNombre = document.getElementById("saludo-usuario");
@@ -13,11 +14,14 @@ const botonRetornar = document.getElementById("boton-retornar");
 const botonSalir = document.getElementById("bnt-logout");
 
 let arbolCarpetas = new arbolMulticamino();
+let listaAcciones = new ListaCircular();
 
 //función que se ejecuta al cargar la pagina
 function inicioPagina() {
   let usuario = JSON.parse(localStorage.getItem("estudianteLog"));
   etiquetaNombre.innerHTML = `Bienvenido ${usuario.nombre}`
+
+//acá se obtienen los datos necesarios de los estudiantes (carpetas, acciones, etc) almacenados previamente
 
   //mostrando las carpetas del usuario recien loggeado
   if (usuario.carpeta != null) {
@@ -35,15 +39,36 @@ function inicioPagina() {
     //actualizando los botones carpeta
     actualizarBotonesCarpetas();
   }
+
+  if (usuario.acciones != null) {
+    let temp = JSON.parse(localStorage.getItem("estudianteLog")).acciones;
+
+    listaAcciones.cabeza = temp.cabeza;
+  }
+
+   //insertando la acción en la lista
+   let accion = `Inició sesión\\n Fecha:${(new Date()).toLocaleDateString()}\\n Hora:${(new Date()).toLocaleTimeString()}\\n`;
+   listaAcciones.insertar(accion);
+ 
+   //actualizando las acciones
+   actualizarAcciones();
 }
 
-  //funcion para el reporte de carpetas
-  botonReporteCarpetas.addEventListener("click", function(){
-    const contenedorImagen = document.getElementById("container-arbol-img");
-    let url = 'https://quickchart.io/graphviz?graph=';
-    let body = `digraph G{${arbolCarpetas.graph(barraRuta.value)} }`;
-    contenedorImagen.setAttribute("src",url + body);
-  });
+//funcion para el reporte de carpetas
+botonReporteCarpetas.addEventListener("click", function(){
+  const contenedorImagen = document.getElementById("container-arbol-img");
+  let url = 'https://quickchart.io/graphviz?graph=';
+  let body = `digraph G{${arbolCarpetas.graph(barraRuta.value)} }`;
+  contenedorImagen.setAttribute("src",url + body);
+});
+
+//funcion para el reporte de acciones
+botonReporteAcciones.addEventListener("click", function(){
+  const contenedorImagen = document.getElementById("container-acciones-img");
+  let url = 'https://quickchart.io/graphviz?graph=';
+  let body = `digraph G{node [shape=box]${listaAcciones.graficar()} }`;
+  contenedorImagen.setAttribute("src",url + body);
+});
 
 //funcion para crear una carpeta
 botonCrearCarpeta.addEventListener("click", function () {
@@ -128,6 +153,13 @@ function eliminarCarpeta(nombreCarpeta, ruta){
   //actulizando carpetas en el arbolAVL
   actualizarCarpetas();
 
+  //insertando la acción en la lista
+  let accion = `Acción: Se eliminó carpeta: ${nombreCarpeta}\\n Fecha:${(new Date()).toLocaleDateString()}\\n Hora:${(new Date()).toLocaleTimeString()}\\n`;
+  listaAcciones.insertar(accion);
+
+  //actualizando las acciones
+  actualizarAcciones();
+
   //alerta
   Swal.fire({
     position: 'center',
@@ -180,12 +212,18 @@ botonRetornar.addEventListener("click", function(){
 //funcion para crear carpetas
 
 function crearCarpeta(nombreCarpeta, ruta) {
-
   //obteniendo el arbol de carpetas del localstorage
   arbolCarpetas.insert(nombreCarpeta, ruta);
 
   //actulizando carpetas en el arbolAVL
   actualizarCarpetas();
+
+  //insertando la acción en la lista
+  let accion = `Acción: Se creó carpeta: ${nombreCarpeta}\\n Fecha:${(new Date()).toLocaleDateString()}\\n Hora:${(new Date()).toLocaleTimeString()}\\n`;
+  listaAcciones.insertar(accion);
+
+  //actualizando las acciones
+  actualizarAcciones();
 
   //alerta
   Swal.fire({
@@ -202,6 +240,9 @@ function crearCarpeta(nombreCarpeta, ruta) {
   //actualizando los botones carpeta
   actualizarBotonesCarpetas();
 }
+
+
+//boton para hacer logout 
 
 botonSalir.addEventListener("click", function () {
   try {
@@ -220,6 +261,13 @@ botonSalir.addEventListener("click", function () {
           'Vuelve pronto.',
           'success'
         )
+        //insertando la acción en la lista
+        let accion = `Cerró sesión\\n Fecha:${(new Date()).toLocaleDateString()}\\n Hora:${(new Date()).toLocaleTimeString()}\\n`;
+        listaAcciones.insertar(accion);
+
+        //actualizando las acciones
+        actualizarAcciones();
+
         window.location.href = "../index.html";
       }
     })
@@ -234,11 +282,20 @@ function actualizarCarpetas(){
   let usuario = JSON.parse(localStorage.getItem("estudianteLog"));
 
   arbol.raiz = JSON.parse(temp).raiz;
-
   arbol.modificarCarpetas(usuario.carnet,arbolCarpetas);
 
   localStorage.setItem('arbolEstudiantesLS', JSON.stringify(arbol));
 }
 
-/*actualizar datos*/
+function actualizarAcciones(){
+  let arbol = new ArbolAVL();
+  let temp = localStorage.getItem('arbolEstudiantesLS');
+  let usuario = JSON.parse(localStorage.getItem("estudianteLog"));
+
+  arbol.raiz = JSON.parse(temp).raiz;
+  arbol.modificarAcciones(usuario.carnet,listaAcciones);
+  localStorage.setItem('arbolEstudiantesLS', JSON.stringify(arbol));
+}
+
+/*actualizar datos al cargar la pagina*/
 window.onload = inicioPagina;

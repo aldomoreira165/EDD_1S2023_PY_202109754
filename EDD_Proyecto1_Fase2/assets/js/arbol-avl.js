@@ -230,6 +230,13 @@ class ArbolAVL {
         nodo.estudiante.carpeta = carpetas;
         return true;
     }
+
+    modificarAcciones(carnet, accion){
+        const nodo = this.buscarEstudiante(carnet);
+        if(!nodo) return false;
+        nodo.estudiante.acciones = accion;
+        return true;
+    }
 }
 
 export {ArbolAVL};
