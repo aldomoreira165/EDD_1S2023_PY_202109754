@@ -6,6 +6,8 @@ import { ListaCircular } from "./lista-circular.js";
 const contenedorCarpetas = document.getElementById("carpetas-container");
 const etiquetaNombre = document.getElementById("saludo-usuario");
 const barraRuta = document.getElementById("input-busqueda");
+const inputSubirArchivo = document.getElementById("input-subir-archivo");
+const botonSubirArchivo = document.getElementById("container-logo-subir-archivo");
 const botonCrearCarpeta = document.getElementById("btn-crear-carpeta");
 const botonEliminarCarpeta = document.getElementById("btn-eliminar-carpeta");
 const botonReporteCarpetas = document.getElementById("btn-reporte-carpetas");
@@ -296,6 +298,26 @@ function actualizarAcciones(){
   arbol.modificarAcciones(usuario.carnet,listaAcciones);
   localStorage.setItem('arbolEstudiantesLS', JSON.stringify(arbol));
 }
+
+/*Acciones para subir un archivo*/
+botonSubirArchivo.addEventListener("click", function(){
+  inputSubirArchivo.click();
+});
+
+inputSubirArchivo.addEventListener("change", function(){
+  const archivo = this.files[0];
+  const lector = new FileReader();
+
+  lector.onload = function(evento) {
+    const contenido = evento.target.result;
+    const base64 = btoa(contenido);
+    console.log(base64);
+  };
+
+  lector.readAsBinaryString(archivo);
+  
+});
+
 
 /*actualizar datos al cargar la pagina*/
 window.onload = inicioPagina;

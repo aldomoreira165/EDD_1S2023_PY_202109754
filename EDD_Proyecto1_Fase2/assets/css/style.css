@@ -108,6 +108,10 @@
     color: #40414a;
 }
 
+#container-logo-subir-archivo a:hover{
+    color: rgba(37, 95, 156, 0.9);
+}
+
 #barra-busqueda{
     margin: 10px;
 }
