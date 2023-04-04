@@ -152,6 +152,53 @@
     cursor: pointer;
 }
 
+/*iconos de archivos*/
+
+.btnIcon:hover{
+    color: #ececec;
+    background-color:#40414a;
+    cursor: pointer;
+}
+
+#img-documento-texto {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#img-documento-texto a{
+    font-size: 70px;
+    color: #1B9ED6 ;
+}
+
+#img-documento-pdf {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#img-documento-pdf a{
+    font-size: 70px;
+    color: #D6461B;
+}
+
+#img-documento-imagen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#img-documento-imagen a{
+    font-size: 70px;
+    color: #129B2D;
+}
+
+#nombre-documento {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /*Boton retorno*/
 #container-retornar{
     border-radius: 5px;

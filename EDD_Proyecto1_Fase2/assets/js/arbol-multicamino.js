@@ -2,6 +2,7 @@
 class Tnode {
     constructor(folderName) {
         this.folderName = folderName;
+        this.documents = []; //documentos de la carpeta
         this.children = []; //nodos hijos
         this.id = null;
     }
@@ -16,7 +17,7 @@ class arbolMulticamino {
 
     insert(folderName, fatherPath) {
         let newNode = new Tnode(folderName);
-        let fatherNode = this._getFolder(fatherPath);
+        let fatherNode = this.getFolder(fatherPath);
 
         if (fatherNode) {
             if (fatherNode.children.some(child => child.folderName == folderName)) {
@@ -30,7 +31,7 @@ class arbolMulticamino {
         }
     }
 
-    _getFolder(path) {
+    getFolder(path) {
         if (path == this.root.folderName) {
             return this.root;
         } else {
@@ -51,7 +52,7 @@ class arbolMulticamino {
     }
 
     delete(folderName, fatherPath) {
-        let parentNode = this._getFolder(fatherPath);
+        let parentNode = this.getFolder(fatherPath);
         if (parentNode) {
             let folderNode = parentNode.children.find(child => child.folderName === folderName);
             if (folderNode) {
@@ -73,7 +74,7 @@ class arbolMulticamino {
         let nodes = "";
         let connections = "";
 
-        let node = this._getFolder(fatherPath);
+        let node = this.getFolder(fatherPath);
         let queue = [];
         queue.push(node);
         while(queue.length !== 0){
@@ -91,7 +92,7 @@ class arbolMulticamino {
     }
 
     getHTML(path){
-        let node = this._getFolder(path);
+        let node = this.getFolder(path);
         let code = "";
         node.children.map(child => {
             code += `<div id="${child.folderName}" class="btnCarpeta">
@@ -103,6 +104,38 @@ class arbolMulticamino {
                          </div>
                     </div>`
         })
+
+        node.documents.map(document => {
+            if(document.type == "text/plain"){
+                code += `<div id="${document.name}" class="btnIcon">
+                        <div id="img-documento-texto">
+                            <a><i class="fas fa-file-alt"></i></a>
+                         </div>
+                        <div id="nombre-documento">
+                            <p>${document.name}</p>
+                         </div>
+                    </div>`
+            }else if(document.type == "application/pdf"){
+                code += `<div id="${document.name}" class="btnIcon">
+                        <div id="img-documento-pdf">
+                            <a><i class="fas fa-file-pdf"></i></a>
+                         </div>
+                        <div id="nombre-documento">
+                            <p>${document.name}</p>
+                         </div>
+                    </div>`
+            }else{
+                code += `<div id="${document.name}" class="btnIcon">
+                        <div id="img-documento-imagen">
+                            <a><i class="fas fa-images"></i></a>
+                         </div>
+                        <div id="nombre-documento">
+                            <p>${document.name}</p>
+                         </div>
+                    </div>` 
+            };
+        });
+
         return code;
     }
 
