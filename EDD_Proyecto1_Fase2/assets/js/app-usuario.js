@@ -3,6 +3,8 @@ import { arbolMulticamino } from "./arbol-multicamino.js";
 import { ArbolAVL } from "./arbol-avl.js";
 import { ListaCircular } from "./lista-circular.js";
 
+const selectEstudiantes = document.getElementById("select-estudiantes");
+const selectArchivos = document.getElementById("select-archivos");
 const contenedorCarpetas = document.getElementById("carpetas-container");
 const etiquetaNombre = document.getElementById("saludo-usuario");
 const barraRuta = document.getElementById("input-busqueda");
@@ -13,6 +15,7 @@ const botonEliminarCarpeta = document.getElementById("btn-eliminar-carpeta");
 const botonReporteCarpetas = document.getElementById("btn-reporte-carpetas");
 const botonReporteAcciones = document.getElementById("btn-reporte-acciones");
 const botonRetornar = document.getElementById("boton-retornar");
+const botonAcordeon = document.getElementById("boton-acordeon");
 const botonSalir = document.getElementById("bnt-logout");
 
 let arbolCarpetas = new arbolMulticamino();
@@ -54,6 +57,39 @@ function inicioPagina() {
 
   //actualizando las acciones
   actualizarAcciones();
+
+  //actualizando acordeon de permisos
+  actualizarAcordeon();
+}
+
+function actualizarAcordeon(){
+  let contador = 1;
+  //agregando los estudiantes
+  let arregloEstudiantes = JSON.parse(localStorage.getItem("arregloEstudiantes"));
+
+  arregloEstudiantes.forEach(estudiante => {
+    let opcion = document.createElement("option");
+    //estableciendo el valor y el texto de la opción
+    opcion.value = contador;
+    opcion.text = estudiante.nombre;
+    //agregando la opción al select
+    selectEstudiantes.appendChild(opcion);
+    contador += 1;
+  });
+
+  //agregando los archivos
+  let contadorArchivos = 1;
+  let archivos = arbolCarpetas.getFolder(barraRuta.value).documents;
+
+  archivos.forEach(archivo => {
+    let opcion = document.createElement("option");
+    //estableciendo el valor y el texto de la opción
+    opcion.value = contadorArchivos;
+    opcion.text = archivo.name;
+    //agregando la opción al select
+    selectArchivos.appendChild(opcion);
+    contadorArchivos += 1;
+  });
 }
 
 //funcion para el reporte de carpetas
@@ -200,6 +236,7 @@ function entrarCarpeta(folderName) {
   contenedorCarpetas.innerHTML = "";
   contenedorCarpetas.innerHTML = (arbolCarpetas.getHTML(curretPath))
   actualizarBotonesCarpetas();
+  actualizarAcordeon();
 }
 
 //funcion para retornar al inicio 
@@ -306,14 +343,37 @@ botonSubirArchivo.addEventListener("click", function () {
 
 inputSubirArchivo.addEventListener("change", async function () {
   let rutaActual = barraRuta.value;
+  let nombreCopia = "";
 
   const archivo = this.files[0];
+
+  //verificando si ya existe el archivo
+  const existeArchivo = arbolCarpetas.getFolder(rutaActual).documents.find(doc => doc.name === archivo.name);
+
+  if (existeArchivo) {
+    let contador = 0;
+
+    for (let i = 0; i < arbolCarpetas.getFolder(rutaActual).documents.length; i++) {
+      const indice = arbolCarpetas.getFolder(rutaActual).documents[i].name.indexOf("("); // buscamos el índice del primer paréntesis
+      const nombreSinCopia = indice !== -1 ? arbolCarpetas.getFolder(rutaActual).documents[i].name.substring(0, indice) : arbolCarpetas.getFolder(rutaActual).documents[i].name;
+      if (nombreSinCopia == archivo.name) {
+        contador++;
+      }
+    };
+
+    let extension = (archivo.name.split("."))[1];
+    let nombreArchivo = (archivo.name.split("."))[0];
+    nombreCopia = `${nombreArchivo}(copia${contador}).${extension}`;
+  } else {
+    nombreCopia = archivo.name;
+  }
+
   if (archivo.type == "text/plain") {
     let fr = new FileReader();
     fr.readAsText(archivo);
     fr.onload = () => {
       arbolCarpetas.getFolder(rutaActual).documents.push({
-        name: archivo.name,
+        name: nombreCopia,
         content: fr.result,
         type: archivo.type
       })
@@ -338,7 +398,7 @@ inputSubirArchivo.addEventListener("change", async function () {
   } else {
     let parseBase64 = await base64(archivo);
     arbolCarpetas.getFolder(rutaActual).documents.push({
-      name: archivo.name,
+      name: nombreCopia,
       content: parseBase64,
       type: archivo.type
     });
@@ -373,6 +433,7 @@ function base64(file) {
     reader.readAsBinaryString(file);
   });
 }
+
 
 /*actualizar datos al cargar la pagina*/
 window.onload = inicioPagina;

@@ -107,27 +107,33 @@ class arbolMulticamino {
 
         node.documents.map(document => {
             if(document.type == "text/plain"){
+                let archivo = new Blob([document.content], {type: document.type});
+                const url = URL.createObjectURL(archivo);
                 code += `<div id="${document.name}" class="btnIcon">
                         <div id="img-documento-texto">
-                            <a><i class="fas fa-file-alt"></i></a>
+                            <a href="${url}" download=${document.name}><i class="fas fa-file-alt"></i></a>
                          </div>
                         <div id="nombre-documento">
                             <p>${document.name}</p>
                          </div>
                     </div>`
             }else if(document.type == "application/pdf"){
+                let archivo = new Blob([document.content], {type: document.type});
+                const url = URL.createObjectURL(archivo);
                 code += `<div id="${document.name}" class="btnIcon">
                         <div id="img-documento-pdf">
-                            <a><i class="fas fa-file-pdf"></i></a>
+                            <a href="${url}" download=${document.name}><i class="fas fa-file-pdf"></i></a>
                          </div>
                         <div id="nombre-documento">
                             <p>${document.name}</p>
                          </div>
                     </div>`
             }else{
+                let archivo = new Blob([document.content], {type: document.type});
+                const url = URL.createObjectURL(archivo);
                 code += `<div id="${document.name}" class="btnIcon">
                         <div id="img-documento-imagen">
-                            <a><i class="fas fa-images"></i></a>
+                            <a href="${url}" download=${document.name}><i class="fas fa-images"></i></a>
                          </div>
                         <div id="nombre-documento">
                             <p>${document.name}</p>

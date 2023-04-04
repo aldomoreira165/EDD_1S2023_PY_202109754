@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,12 +10,13 @@
     <link rel="stylesheet" href="assets/css/all.min.css">
     <title>EDD-GoDrive</title>
 </head>
+
 <body>
     <div class="container-fluid">
         <div class="row">
             <div id="nav" class="col-12">
                 <div id="nombre-sitio">
-                  <a href="ventana-usuario.html">EDD GoDrive</a>
+                    <a href="ventana-usuario.html">EDD GoDrive</a>
                 </div>
                 <div id="log-out">
                     <a id="bnt-logout"><i class="fas fa-sign-out-alt"></i></a>
@@ -29,16 +31,20 @@
                             </div>
                             <div id="container-botones-datos-usuario" class="col-12">
                                 <div id="container-boton">
-                                    <button id="btn-crear-carpeta" type="button" class="boton pequeño">Crear Carpeta</button>
+                                    <button id="btn-crear-carpeta" type="button" class="boton pequeño">Crear
+                                        Carpeta</button>
                                 </div>
                                 <div id="container-boton">
-                                    <button id="btn-eliminar-carpeta" type="button" class="boton pequeño eliminar">Eliminar Carpeta</button>
+                                    <button id="btn-eliminar-carpeta" type="button"
+                                        class="boton pequeño eliminar">Eliminar Carpeta</button>
                                 </div>
                                 <div id="container-boton">
-                                    <button id="btn-reporte-carpetas" type="button" class="boton pequeño">Reporte Árbol</button>
+                                    <button id="btn-reporte-carpetas" type="button" class="boton pequeño">Reporte
+                                        Árbol</button>
                                 </div>
                                 <div id="container-boton">
-                                    <button id="btn-reporte-acciones" type="button" class="boton pequeño">Reporte Acciones</button>
+                                    <button id="btn-reporte-acciones" type="button" class="boton pequeño">Reporte
+                                        Acciones</button>
                                 </div>
                             </div>
                         </div>
@@ -46,42 +52,79 @@
                             <div id="container-logo-subir-archivo">
                                 <a><i class="fas fa-upload"></i></a>
                             </div>
-                            <input type="file" id="input-subir-archivo" accept=".txt,.pdf,image/*" style="display:none;">
+                            <input type="file" id="input-subir-archivo" accept=".txt,.pdf,image/*"
+                                style="display:none;">
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button id="boton-acordeon" class="accordion-button" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            Permisos
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show"
+                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <select id="select-estudiantes" class="form-select mb-2"
+                                                aria-label="Default select example">
+                                                <option selected>Estudiantes</option>
+                                            </select>
+                                            <select id="select-archivos" class="form-select mb-2"
+                                                aria-label="Default select example">
+                                                <option selected>Archivos</option>
+                                            </select>
+                                            <select id="select-permisoso" class="form-select"
+                                                aria-label="Default select example">
+                                                <option selected>Permisos</option>
+                                                <option value="1">r</option>
+                                                <option value="1">w</option>
+                                            </select>
+                                            <div id="container-boton">
+                                                <button id="btn-dar-permisos" type="button"
+                                                    class="boton pequeño">
+                                                    Dar permisos</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div id="archivos-usuario" class="col-sm-12 col-md-9">
                         <div id="barra-busqueda" class="col-12">
                             <nav class="navbar navbar-light bg-light">
                                 <div class="container-fluid">
-                                  <form class="d-flex col-12">
-                                    <input id="input-busqueda" class="form-control me-2" type="search" value="/" aria-label="Search" disabled>
-                                    <div id="container-retornar">
-                                        <a id="boton-retornar"><i class="fas fa-home"></i></a>
-                                    </div>
-                                  </form>
+                                    <form class="d-flex col-12">
+                                        <input id="input-busqueda" class="form-control me-2" type="search" value="/"
+                                            aria-label="Search" disabled>
+                                        <div id="container-retornar">
+                                            <a id="boton-retornar"><i class="fas fa-home"></i></a>
+                                        </div>
+                                    </form>
                                 </div>
                             </nav>
                             <div id="carpetas-container" class="row row-cols-3 row-cols-sm-4 row-cols-md-5">
-                                
+
                             </div>
                         </div>
                     </div>
                     <div id="area-arbol" class="col-12">
                         <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-                          <div class="carousel-inner">
-                            <div class="carousel-item active">
-                              <img id="container-arbol-img" class="d-block w-100">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img id="container-arbol-img" class="d-block w-100">
+                                </div>
                             </div>
-                          </div>
                         </div>
                         <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
-                              <div class="carousel-item active">
-                                <img id="container-acciones-img" class="d-block w-100">
-                              </div>
+                                <div class="carousel-item active">
+                                    <img id="container-acciones-img" class="d-block w-100">
+                                </div>
                             </div>
-                          </div>
-                      </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -90,4 +133,5 @@
     <script src="assets/js/app-usuario.js" type="module"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
+
 </html>

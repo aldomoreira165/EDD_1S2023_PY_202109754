@@ -47,6 +47,7 @@ inputCargaMasiva.addEventListener("change", function(){
 
             //agregando el arbol nuevamente al local storage
             localStorage.setItem("arbolEstudiantesLS", JSON.stringify(arbol_estudiantes))
+            localStorage.setItem("arregloEstudiantes",JSON.stringify(arreglo_estudiantes));
         } catch (error) {
             console.error("Error al analizar el archivo JSON", error);
         }
@@ -72,25 +73,6 @@ botonMostrarAlumnos.addEventListener("click", function(){
             text: 'No existen alumnos en el sistema.',
         })  
     }
-
-    /*if(cambios_alumnos == false){
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'No has cargado nuevos alumnos.',
-          })
-    }else{
-        arreglo_estudiantes.forEach(est => {
-            const fila = document.createElement("tr");
-            fila.innerHTML += `
-                    <td>${est.carnet}</td>
-                    <td>${est.nombre}</td>
-                    <td>${est.password}</td>
-                `;
-            cuerpoTablaEstudiantes.append(fila);
-        })
-        cambios_alumnos = false;
-    }*/
 });
 
 //graficar
