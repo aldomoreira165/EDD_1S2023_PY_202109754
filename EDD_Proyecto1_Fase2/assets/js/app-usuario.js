@@ -304,7 +304,7 @@ botonSubirArchivo.addEventListener("click", function () {
   inputSubirArchivo.click();
 });
 
-inputSubirArchivo.addEventListener("change", function () {
+inputSubirArchivo.addEventListener("change", async function () {
   let rutaActual = barraRuta.value;
 
   const archivo = this.files[0];
@@ -336,7 +336,7 @@ inputSubirArchivo.addEventListener("change", function () {
 
     };
   } else {
-    let parseBase64 = base64(archivo);
+    let parseBase64 = await base64(archivo);
     arbolCarpetas.getFolder(rutaActual).documents.push({
       name: archivo.name,
       content: parseBase64,
@@ -362,17 +362,17 @@ inputSubirArchivo.addEventListener("change", function () {
 });
 
 function base64(file) {
-  const lector = new FileReader();
-
-  lector.onload = function (evento) {
-    const contenido = evento.target.result;
-    const base64 = btoa(contenido);
-    console.log(base64);
-  };
-
-  lector.readAsBinaryString(file);
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const contenido = reader.result;
+      const base64 = btoa(contenido);
+      resolve(base64);
+    };
+    reader.onerror = reject;
+    reader.readAsBinaryString(file);
+  });
 }
-
 
 /*actualizar datos al cargar la pagina*/
 window.onload = inicioPagina;
