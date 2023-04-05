@@ -30,13 +30,55 @@
                                 <p id="saludo-usuario"></p>
                             </div>
                             <div id="container-botones-datos-usuario" class="col-12">
-                                <div id="container-boton">
-                                    <button id="btn-crear-carpeta" type="button" class="boton pequeño">Crear
-                                        Carpeta</button>
+                                <div class="accordion" id="accordionExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingOne">
+                                            <button class="accordion-button boton pequeño" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                                                aria-expanded="true" aria-controls="collapseOne">
+                                                Crear carpeta
+                                            </button>
+                                        </h2>
+                                        <div id="collapseOne" class="accordion-collapse collapse show"
+                                            aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body">
+                                                <div class="input-group flex-nowrap">
+                                                    <input id="input-crear-carpeta" type="text" class="form-control"
+                                                        placeholder="Nombre carpeta" aria-label="Username"
+                                                        aria-describedby="addon-wrapping">
+                                                </div>
+                                                <div id="container-boton">
+                                                    <button id="btn-crear-carpeta" type="button"
+                                                        class="boton pequeño">Crear</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div id="container-boton">
-                                    <button id="btn-eliminar-carpeta" type="button"
-                                        class="boton pequeño eliminar">Eliminar Carpeta</button>
+                                <div class="accordion" id="accordionExample">
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="headingOne">
+                                            <button class="accordion-button boton pequeño eliminar" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                                aria-expanded="true" aria-controls="collapseTwo">
+                                                Eliminar carpeta
+                                            </button>
+                                        </h2>
+                                        <div id="collapseTwo" class="accordion-collapse collapse show"
+                                            aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body">
+                                                <div class="input-group flex-nowrap">
+                                                    <input id="input-eliminar-carpeta" type="text" class="form-control"
+                                                        placeholder="Nombre carpeta" aria-label="Username"
+                                                        aria-describedby="addon-wrapping">
+                                                </div>
+                                                <div id="container-boton">
+                                                    <button id="btn-eliminar-carpeta" type="button"
+                                                        class="boton pequeño">Eliminar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div id="container-boton">
                                     <button id="btn-reporte-carpetas" type="button" class="boton pequeño">Reporte
@@ -50,20 +92,47 @@
                         </div>
                         <div id="container-subir-archivo" class="col-12">
                             <div id="container-logo-subir-archivo">
-                                <a><i class="fas fa-upload"></i></a>
+                                <div id="container-boton">
+                                    <button type="button" class="boton pequeño">Subir archivo</button>
+                                </div>
+                            </div>
+                            <div class="accordion" id="accordionExample">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button boton pequeño eliminar" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseFive"
+                                            aria-expanded="true" aria-controls="collapseFive">
+                                            Eliminar Archivo
+                                        </button>
+                                    </h2>
+                                    <div id="collapseFive" class="accordion-collapse collapse show"
+                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            <div class="input-group flex-nowrap">
+                                                <input id="input-eliminar-archivo" type="text" class="form-control"
+                                                    placeholder="Nombre archivo" aria-label="Username"
+                                                    aria-describedby="addon-wrapping">
+                                            </div>
+                                            <div id="container-boton">
+                                                <button id="btn-eliminar-archivo" type="button"
+                                                    class="boton pequeño">Eliminar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <input type="file" id="input-subir-archivo" accept=".txt,.pdf,image/*"
                                 style="display:none;">
                             <div class="accordion" id="accordionExample">
                                 <div class="accordion-item">
                                     <h2 class="accordion-header" id="headingOne">
-                                        <button id="boton-acordeon" class="accordion-button" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
+                                        <button id="boton-acordeon" class="boton pequeño accordion-button" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseTree" aria-expanded="true"
+                                            aria-controls="collapseTree">
                                             Permisos
                                         </button>
                                     </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse show"
+                                    <div id="collapseTree" class="accordion-collapse collapse show"
                                         aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                                         <div class="accordion-body">
                                             <select id="select-estudiantes" class="form-select mb-2"
@@ -81,8 +150,7 @@
                                                 <option value="1">w</option>
                                             </select>
                                             <div id="container-boton">
-                                                <button id="btn-dar-permisos" type="button"
-                                                    class="boton pequeño">
+                                                <button id="btn-dar-permisos" type="button" class="boton pequeño">
                                                     Dar permisos</button>
                                             </div>
                                         </div>

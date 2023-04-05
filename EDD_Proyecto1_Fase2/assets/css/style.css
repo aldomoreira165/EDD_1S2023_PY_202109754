@@ -56,12 +56,24 @@
     color: black;
 }
 
+/*datos usuario*/
+#saludo-usuario{
+    text-align: center;
+}
+
 /*seccion de usuario*/
 #container-datos-usuario{
     margin-top: 10px;
     border: 4px solid #40414a;
     border-radius: 15px;
     padding: 12px 5px 12px 5px;
+}
+
+#container-subir-archivo{
+    margin-top: 10px;
+    border: 4px solid #40414a;
+    border-radius: 15px;
+    padding: 12px 5px 12px 5px; 
 }
 
 #container-texto-datos-usuario p{
@@ -75,7 +87,7 @@
 }
 
 #container-boton button{
-    width: 200px;
+    width: 260px;
 }
 
 #container-texto-datos-usuario{
@@ -86,30 +98,6 @@
 
 .eliminar:hover{
     background-color:#D20E0E ;
-}
-
-#container-logo-subir-archivo{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 15px;
-}
-
-#container-logo-subir-archivo{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 15px;
-}
-
-#container-logo-subir-archivo a{
-    text-decoration: none;
-    font-size: 60px;
-    color: #40414a;
-}
-
-#container-logo-subir-archivo a:hover{
-    color: rgba(37, 95, 156, 0.9);
 }
 
 #barra-busqueda{

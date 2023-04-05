@@ -10,8 +10,12 @@ const etiquetaNombre = document.getElementById("saludo-usuario");
 const barraRuta = document.getElementById("input-busqueda");
 const inputSubirArchivo = document.getElementById("input-subir-archivo");
 const botonSubirArchivo = document.getElementById("container-logo-subir-archivo");
+const botonEliminarArchivo = document.getElementById("btn-eliminar-archivo");
+const inputEliminarArchivo = document.getElementById("input-eliminar-archivo");
 const botonCrearCarpeta = document.getElementById("btn-crear-carpeta");
+const inputCrearCarpeta = document.getElementById("input-crear-carpeta");
 const botonEliminarCarpeta = document.getElementById("btn-eliminar-carpeta");
+const inputEliminarCarpeta = document.getElementById("input-eliminar-carpeta");
 const botonReporteCarpetas = document.getElementById("btn-reporte-carpetas");
 const botonReporteAcciones = document.getElementById("btn-reporte-acciones");
 const botonRetornar = document.getElementById("boton-retornar");
@@ -62,7 +66,7 @@ function inicioPagina() {
   actualizarAcordeon();
 }
 
-function actualizarAcordeon(){
+function actualizarAcordeon() {
   let contador = 1;
   //agregando los estudiantes
   let arregloEstudiantes = JSON.parse(localStorage.getItem("arregloEstudiantes"));
@@ -111,77 +115,46 @@ botonReporteAcciones.addEventListener("click", function () {
 //funcion para crear una carpeta
 botonCrearCarpeta.addEventListener("click", function () {
   let nombreCarpeta = "";
-  Swal.fire({
-    title: 'Ingresa el nombre de la carpeta',
-    input: 'text',
-    input: 'text',
-    inputAttributes: {
-      autocapitalize: 'off'
-    },
-    showCancelButton: true,
-    confirmButtonText: 'Crear',
-    cancelButtonText: 'Cancelar',
-    showLoaderOnConfirm: true,
-    preConfirm: (login) => {
-      return fetch(`//api.github.com/users/${login}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(response.statusText)
-          }
-          return response.json()
-        })
-        .catch(error => {
-          Swal.showValidationMessage(
-            `Request failed: ${error}`
-          )
-        })
-    },
-    allowOutsideClick: () => !Swal.isLoading()
-  }).then((result) => {
-    if (result.isConfirmed) {
-      nombreCarpeta = result.value.login;
-      let valorRuta = barraRuta.value;
-      crearCarpeta(nombreCarpeta, valorRuta);
-    }
-  })
+  nombreCarpeta = inputCrearCarpeta.value;
+  let valorRuta = barraRuta.value;
+  crearCarpeta(nombreCarpeta, valorRuta);
 });
+
+//funcion para eliminar archivo
+botonEliminarArchivo.addEventListener("click", function () {
+  let nombreEliminar = "";
+  nombreEliminar = inputEliminarArchivo.value;
+  let valorRuta = barraRuta.value;
+  eliminarArchivo(nombreEliminar, valorRuta);
+});
+
+function eliminarArchivo(nombre, rutaActual) {
+  let indice = arbolCarpetas.getFolder(rutaActual).documents.indexOf(nombre);
+  if (indice != -1) {
+    // Eliminar el valor del array utilizando splice()
+    arbolCarpetas.getFolder(rutaActual).documents.splice(indice, 1);
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: '¡Archivo eliminado exitosamente!',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  } else {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'No se ha encontrado el archivo.',
+    })
+  }
+};
 
 //funcion para eliminar carpetas
 botonEliminarCarpeta.addEventListener("click", function () {
   let nombreCarpeta = "";
-  Swal.fire({
-    title: 'Ingresa el nombre de la carpeta a eliminar',
-    input: 'text',
-    input: 'text',
-    inputAttributes: {
-      autocapitalize: 'off'
-    },
-    showCancelButton: true,
-    confirmButtonText: 'Eliminar',
-    cancelButtonText: 'Cancelar',
-    showLoaderOnConfirm: true,
-    preConfirm: (login) => {
-      return fetch(`//api.github.com/users/${login}`)
-        .then(response => {
-          if (!response.ok) {
-            throw new Error(response.statusText)
-          }
-          return response.json()
-        })
-        .catch(error => {
-          Swal.showValidationMessage(
-            `Request failed: ${error}`
-          )
-        })
-    },
-    allowOutsideClick: () => !Swal.isLoading()
-  }).then((result) => {
-    if (result.isConfirmed) {
-      nombreCarpeta = result.value.login;
-      let valorRuta = barraRuta.value;
-      eliminarCarpeta(nombreCarpeta, valorRuta);
-    }
-  })
+  nombreCarpeta = inputEliminarCarpeta.value;
+  let valorRuta = barraRuta.value;
+  eliminarCarpeta(nombreCarpeta, valorRuta);
 })
 
 function eliminarCarpeta(nombreCarpeta, ruta) {
@@ -413,6 +386,13 @@ inputSubirArchivo.addEventListener("change", async function () {
       showConfirmButton: false,
       timer: 1500
     })
+
+    //insertando la acción en la lista
+    let accion = `Acción: Se creó el documento: ${nombreCopia}\\n Fecha:${(new Date()).toLocaleDateString()}\\n Hora:${(new Date()).toLocaleTimeString()}\\n`;
+    listaAcciones.insertar(accion);
+
+    //actualizando las acciones
+    actualizarAcciones();
 
     //graficando
     contenedorCarpetas.innerHTML = "";

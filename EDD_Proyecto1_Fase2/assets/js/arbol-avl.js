@@ -14,103 +14,88 @@ class NodoAVL {
 class ArbolAVL {
     constructor() {
         this.raiz = null;
-        this.tamaño = 0;
     }
     
     //funciones generales
-
-    obtenerTamaño(){
-        return this.tamaño;
-    }
-
     _obtenerAltura(nodo) {
         if (nodo == null) {
             return -1;
-        } else {
-            return nodo.altura;
         }
+        return nodo.altura;
     }
 
     _obtenerAlturaMaxima(nodoIzquierdo, nodoDerecho){
-        if (nodoIzquierdo > nodoDerecho){
-            return nodoIzquierdo.altura
-        }else{
-            return nodoDerecho.altura;
+        if (nodoIzquierdo > nodoDerecho) {
+            return nodoIzquierdo;
         }
-    }
-
-    _obtenerFactorEquilibrio(nodo) {
-        if (nodo === null) {
-            return 0;
-        }
-        return this._obtenerAltura(nodo.izquierdo) - this._obtenerAltura(nodo.derecho);
+        return nodoDerecho;
     }
 
     //rotaciones
     _rotacionIzquierda(nodo) {
-        var izquierdo = nodo.izquierdo;
+        var aux = nodo.izquierdo;
         
-        nodo.izquierdo = izquierdo.derecho;
-        izquierdo.izquierdo = nodo;
+        nodo.izquierdo = aux.derecho;
+        aux.izquierdo = nodo;
 
-        nodo.altura = this._obtenerAlturaMaxima(this._obtenerAltura(nodo.derecho), this._obtenerAltura(nodo.izquierdo)) + 1;
-        izquierdo.altura = this._obtenerAlturaMaxima(this._obtenerAltura(izquierdo.izquierdo), nodo.altura) + 1;
+        nodo.altura = this._obtenerAlturaMaxima(this._obtenerAltura(nodo.izquierdo), this._obtenerAltura(nodo.derecho)) + 1;
+        aux.altura = this._obtenerAlturaMaxima(this._obtenerAltura(nodo.derecho), nodo.altura) + 1;
 
-        return izquierdo;
+        return aux;
     }
 
     _rotacionDerecha(nodo) {
-        var derecho = nodo.derecho;
+        var aux = nodo.derecho;
 
-        nodo.derecho = derecho.izquierdo;
-        derecho.izquierdo = nodo;
+        nodo.derecho = aux.izquierdo;
+        aux.izquierdo = nodo;
 
-        nodo.altura = this._obtenerAlturaMaxima(this._obtenerAltura(nodo.derecho), this._obtenerAltura(nodo.izquierdo)) + 1;
-        derecho.altura = this._obtenerAlturaMaxima(this._obtenerAltura(derecho.derecho), nodo.altura) + 1;
+        nodo.altura = this._obtenerAlturaMaxima(this._obtenerAltura(nodo.izquierdo), this._obtenerAltura(nodo.derecho)) + 1;
+        aux.altura = this._obtenerAlturaMaxima(this._obtenerAltura(nodo.derecho), nodo.altura) + 1;
 
-        return derecho;
+        return aux;
     }
 
     _rotacionDobleIzquierda(nodo) {
-        nodo.izquierdo = this._rotacionDerecha(nodo.izquierdo);
+        nodo.izquierdo = this._rotacionDerecha(nodo);
         return this._rotacionIzquierda(nodo);
     }
 
     _rotacionDobleDerecha(nodo) {
-        nodo.derecho = this._rotacionIzquierda(nodo.derecho);
+        nodo.derecho = this._rotacionIzquierda(nodo);
         return this._rotacionDerecha(nodo);
     }
 
     // Función para insertar un nodo en el árbol AVL
     insertar(estudiante) {
         this.raiz = this._agregar(estudiante, this.raiz);
-        this.tamaño += 1;
-        console.log(`Se insertó: ${estudiante.carnet}`);
     }
 
     _agregar(estudiante, nodo){
         if(nodo == null) {
             return new NodoAVL(estudiante);
-        }else if(estudiante.carnet < nodo.estudiante.carnet) {
+        }
+        
+        if(estudiante.carnet < nodo.estudiante.carnet) {
             nodo.izquierdo = this._agregar(estudiante, nodo.izquierdo);
-            if(this._obtenerAltura(nodo.izquierdo)-this._obtenerAltura(nodo.derecho) == 2) {
+            if(this._obtenerAltura(nodo.derecho)-this._obtenerAltura(nodo.izquierdo) == -2) {
                 if(estudiante.carnet < nodo.izquierdo.estudiante.carnet) {
-                    nodo = this._rotacionIzquierdo(nodo);
+                    nodo = this._rotacionIzquierda(nodo);
                 } else {
-                    nodo = this._rotacionDobleIzquierdo(nodo);
+                    nodo = this._rotacionDobleIzquierda(nodo);
                 }
             }
         } else if(estudiante.carnet > nodo.estudiante.carnet) {
             nodo.derecho = this._agregar(estudiante, nodo.derecho);
             if(this._obtenerAltura(nodo.derecho)-this._obtenerAltura(nodo.izquierdo) == 2) {
-                if(estudiante.carnet < nodo.derecho.estudiante.carnet) {
+                if(estudiante.carnet > nodo.derecho.estudiante.carnet) {
                     nodo = this._rotacionDerecha(nodo);
                 } else {
                     nodo = this._rotacionDobleDerecha(nodo);
                 }
             }
         } else {
-            console.log("El elemento ya existe en el árbol");
+            nodo.estudiante = estudiante;
         }
         nodo.altura = this._obtenerAlturaMaxima(this._obtenerAltura(nodo.izquierdo), this._obtenerAltura(nodo.derecho))+1;
         return nodo;
@@ -118,7 +103,6 @@ class ArbolAVL {
 
 
     graficar() {
-        console.log("demtro")
         conexiones = "";
         nodos = "";
         this._graficarRecursivo(this.raiz);
