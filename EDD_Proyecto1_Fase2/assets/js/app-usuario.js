@@ -118,6 +118,7 @@ botonCrearCarpeta.addEventListener("click", function () {
   nombreCarpeta = inputCrearCarpeta.value;
   let valorRuta = barraRuta.value;
   crearCarpeta(nombreCarpeta, valorRuta);
+  inputCrearCarpeta.value = "";
 });
 
 //funcion para eliminar archivo
@@ -126,13 +127,30 @@ botonEliminarArchivo.addEventListener("click", function () {
   nombreEliminar = inputEliminarArchivo.value;
   let valorRuta = barraRuta.value;
   eliminarArchivo(nombreEliminar, valorRuta);
+  inputEliminarArchivo.value = "";
 });
 
 function eliminarArchivo(nombre, rutaActual) {
-  let indice = arbolCarpetas.getFolder(rutaActual).documents.indexOf(nombre);
+  let indice = arbolCarpetas.getFolder(rutaActual).documents.findIndex(obj => obj.name == nombre);
   if (indice != -1) {
-    // Eliminar el valor del array utilizando splice()
-    arbolCarpetas.getFolder(rutaActual).documents.splice(indice, 1);
+    // Eliminar el valor del array 
+
+    const newArray = arbolCarpetas.getFolder(rutaActual).documents.filter((obj, i) => {
+      return i !== indice;
+    });
+
+    arbolCarpetas.getFolder(rutaActual).documents = newArray;
+
+    //actualizando las carpetas
+    actualizarCarpetas();
+
+    //insertando la acción en la lista
+    let accion = `Acción: Se eliminó archivo: ${nombre}\\n Fecha:${(new Date()).toLocaleDateString()}\\n Hora:${(new Date()).toLocaleTimeString()}\\n`;
+    listaAcciones.insertar(accion);
+
+    //actualizando las acciones
+    actualizarAcciones();
+
     Swal.fire({
       position: 'center',
       icon: 'success',
@@ -140,6 +158,10 @@ function eliminarArchivo(nombre, rutaActual) {
       showConfirmButton: false,
       timer: 1500
     })
+
+    contenedorCarpetas.innerHTML = "";
+    contenedorCarpetas.innerHTML = (arbolCarpetas.getHTML(rutaActual))
+
   } else {
     Swal.fire({
       icon: 'error',
@@ -155,6 +177,7 @@ botonEliminarCarpeta.addEventListener("click", function () {
   nombreCarpeta = inputEliminarCarpeta.value;
   let valorRuta = barraRuta.value;
   eliminarCarpeta(nombreCarpeta, valorRuta);
+  inputEliminarCarpeta.value = "";
 })
 
 function eliminarCarpeta(nombreCarpeta, ruta) {
