@@ -424,18 +424,12 @@ inputSubirArchivo.addEventListener("change", async function () {
 
 });
 
-function base64(file) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const contenido = reader.result;
-      const base64 = btoa(contenido);
-      resolve(base64);
-    };
-    reader.onerror = reject;
-    reader.readAsBinaryString(file);
-  });
-}
+const base64 = file => new Promise((resolve, reject) => {
+  const reader = new FileReader();
+  reader.readAsDataURL(file);
+  reader.onload = () => resolve(reader.result);
+  reader.onerror = error => reject(error);
+});
 
 
 /*actualizar datos al cargar la pagina*/

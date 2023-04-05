@@ -118,22 +118,18 @@ class arbolMulticamino {
                          </div>
                     </div>`
             }else if(document.type == "application/pdf"){
-                let archivo = new Blob([document.content], {type: document.type});
-                const url = URL.createObjectURL(archivo);
                 code += `<div id="${document.name}" class="btnIcon">
                         <div id="img-documento-pdf">
-                            <a href="${url}" download=${document.name}><i class="fas fa-file-pdf"></i></a>
+                            <a href="${document.content}" download=${document.name}><i class="fas fa-file-pdf"></i></a>
                          </div>
                         <div id="nombre-documento">
                             <p>${document.name}</p>
                          </div>
                     </div>`
             }else{
-                let archivo = new Blob([document.content], {type: document.type});
-                const url = URL.createObjectURL(archivo);
                 code += `<div id="${document.name}" class="btnIcon">
                         <div id="img-documento-imagen">
-                            <a href="${url}" download=${document.name}><i class="fas fa-images"></i></a>
+                            <a href="${document.content}" download=${document.name}><i class="fas fa-images"></i></a>
                          </div>
                         <div id="nombre-documento">
                             <p>${document.name}</p>
