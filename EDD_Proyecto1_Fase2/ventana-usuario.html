@@ -85,6 +85,9 @@
                                         Árbol</button>
                                 </div>
                                 <div id="container-boton">
+                                    <button id="btn-reporte-matriz" type="button" class="boton pequeño">Reporte Matriz</button>
+                                </div>
+                                <div id="container-boton">
                                     <button id="btn-reporte-acciones" type="button" class="boton pequeño">Reporte
                                         Acciones</button>
                                 </div>
@@ -141,13 +144,12 @@
                                             </select>
                                             <select id="select-archivos" class="form-select mb-2"
                                                 aria-label="Default select example">
-                                                <option selected>Archivos</option>
                                             </select>
-                                            <select id="select-permisoso" class="form-select"
+                                            <select id="select-permisos" class="form-select"
                                                 aria-label="Default select example">
                                                 <option selected>Permisos</option>
                                                 <option value="1">r</option>
-                                                <option value="1">w</option>
+                                                <option value="2">w</option>
                                             </select>
                                             <div id="container-boton">
                                                 <button id="btn-dar-permisos" type="button" class="boton pequeño">
@@ -182,6 +184,13 @@
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
                                     <img id="container-arbol-img" class="d-block w-100">
+                                </div>
+                            </div>
+                        </div>
+                        <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img id="container-matriz-img" class="d-block w-100">
                                 </div>
                             </div>
                         </div>

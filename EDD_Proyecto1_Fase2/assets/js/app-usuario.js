@@ -5,6 +5,7 @@ import { ListaCircular } from "./lista-circular.js";
 
 const selectEstudiantes = document.getElementById("select-estudiantes");
 const selectArchivos = document.getElementById("select-archivos");
+const selectPermisos = document.getElementById("select-permisos");
 const contenedorCarpetas = document.getElementById("carpetas-container");
 const etiquetaNombre = document.getElementById("saludo-usuario");
 const barraRuta = document.getElementById("input-busqueda");
@@ -18,8 +19,9 @@ const botonEliminarCarpeta = document.getElementById("btn-eliminar-carpeta");
 const inputEliminarCarpeta = document.getElementById("input-eliminar-carpeta");
 const botonReporteCarpetas = document.getElementById("btn-reporte-carpetas");
 const botonReporteAcciones = document.getElementById("btn-reporte-acciones");
+const botonReporteMatriz = document.getElementById("btn-reporte-matriz");
 const botonRetornar = document.getElementById("boton-retornar");
-const botonAcordeon = document.getElementById("boton-acordeon");
+const botonPermisos = document.getElementById("btn-dar-permisos");
 const botonSalir = document.getElementById("bnt-logout");
 
 let arbolCarpetas = new arbolMulticamino();
@@ -62,11 +64,14 @@ function inicioPagina() {
   //actualizando las acciones
   actualizarAcciones();
 
-  //actualizando acordeon de permisos
-  actualizarAcordeon();
+  //actualizando acordeon de alumnos
+  actualizarSelectAlumnos();
+
+  //actualizando acordeon de archivos
+  actualizarSelectArchivos();
 }
 
-function actualizarAcordeon() {
+function actualizarSelectAlumnos() {
   let contador = 1;
   //agregando los estudiantes
   let arregloEstudiantes = JSON.parse(localStorage.getItem("arregloEstudiantes"));
@@ -75,15 +80,28 @@ function actualizarAcordeon() {
     let opcion = document.createElement("option");
     //estableciendo el valor y el texto de la opción
     opcion.value = contador;
-    opcion.text = estudiante.nombre;
+    opcion.text = estudiante.carnet;
     //agregando la opción al select
     selectEstudiantes.appendChild(opcion);
     contador += 1;
   });
+}
 
+function actualizarSelectArchivos() {
   //agregando los archivos
   let contadorArchivos = 1;
   let archivos = arbolCarpetas.getFolder(barraRuta.value).documents;
+
+  //limpiando el select
+  selectArchivos.innerHTML = "";
+
+  let opcion = document.createElement("option");
+  opcion.innerHTML = "Archivos";
+
+  selectArchivos.appendChild(opcion);
+
+  //asignando el elemento seleccionado por defecto
+  selectArchivos.options[0].selected = true;
 
   archivos.forEach(archivo => {
     let opcion = document.createElement("option");
@@ -232,7 +250,7 @@ function entrarCarpeta(folderName) {
   contenedorCarpetas.innerHTML = "";
   contenedorCarpetas.innerHTML = (arbolCarpetas.getHTML(curretPath))
   actualizarBotonesCarpetas();
-  actualizarAcordeon();
+  actualizarSelectArchivos();
 }
 
 //funcion para retornar al inicio 
@@ -242,6 +260,7 @@ botonRetornar.addEventListener("click", function () {
   contenedorCarpetas.innerHTML = "";
   contenedorCarpetas.innerHTML = (arbolCarpetas.getHTML("/"))
   actualizarBotonesCarpetas();
+  actualizarSelectArchivos();
 })
 
 //funcion para crear carpetas
@@ -429,6 +448,43 @@ const base64 = file => new Promise((resolve, reject) => {
   reader.readAsDataURL(file);
   reader.onload = () => resolve(reader.result);
   reader.onerror = error => reject(error);
+});
+
+/*funcion para cargar permisos a la matriz*/
+botonPermisos.addEventListener("click", function () {
+  let carnetEstudiante = (selectEstudiantes.options[selectEstudiantes.selectedIndex]).text;
+  let archivo = (selectArchivos.options[selectArchivos.selectedIndex]).text;
+  let permiso = (selectPermisos.options[selectPermisos.selectedIndex]).text;
+
+  //quitando el punto al nombre de archivo
+  let nombreArchivo = (archivo.split("."))[0];
+
+  try {
+    arbolCarpetas.insertFile(nombreArchivo, carnetEstudiante, permiso, barraRuta.value);
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: '¡Permiso otorgado correctamente!',
+      showConfirmButton: false,
+      timer: 1500
+    })
+  } catch (error) {
+    console.log(error);
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'Algo salió mal.',
+    })
+
+  }
+});
+
+botonReporteMatriz.addEventListener("click", function () {
+  const contenedorImagen = document.getElementById("container-matriz-img");
+  let url = 'https://quickchart.io/graphviz?graph=';
+  let body = `digraph G{${arbolCarpetas.graphMatriz(barraRuta.value)} }`;
+  contenedorImagen.setAttribute("src", url + body);
 });
 
 

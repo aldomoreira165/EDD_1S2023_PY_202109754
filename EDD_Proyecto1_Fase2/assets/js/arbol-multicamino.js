@@ -1,9 +1,12 @@
 
+import { SparseMatrix } from "./matriz.js";
+
 class Tnode {
     constructor(folderName) {
         this.folderName = folderName;
         this.documents = []; //documentos de la carpeta
         this.children = []; //nodos hijos
+        this.matriz = new SparseMatrix();
         this.id = null;
     }
 }
@@ -70,28 +73,28 @@ class arbolMulticamino {
         }
     }
 
-    graph(fatherPath){
+    graph(fatherPath) {
         let nodes = "";
         let connections = "";
 
         let node = this.getFolder(fatherPath);
         let queue = [];
         queue.push(node);
-        while(queue.length !== 0){
+        while (queue.length !== 0) {
             let len = queue.length;
-            for(let i = 0; i < len; i ++){
+            for (let i = 0; i < len; i++) {
                 let node = queue.shift();
                 nodes += `S_${node.id}[label="${node.folderName}"];\n`;
-                node.children.forEach( item => {
+                node.children.forEach(item => {
                     connections += `S_${node.id} -> S_${item.id};\n`
                     queue.push(item);
                 });
             }
         }
-        return 'node[shape="record"];\n' + nodes +'\n'+ connections;
+        return 'node[shape="record"];\n' + nodes + '\n' + connections;
     }
 
-    getHTML(path){
+    getHTML(path) {
         let node = this.getFolder(path);
         let code = "";
         node.children.map(child => {
@@ -106,8 +109,8 @@ class arbolMulticamino {
         })
 
         node.documents.map(document => {
-            if(document.type == "text/plain"){
-                let archivo = new Blob([document.content], {type: document.type});
+            if (document.type == "text/plain") {
+                let archivo = new Blob([document.content], { type: document.type });
                 const url = URL.createObjectURL(archivo);
                 code += `<div id="${document.name}" class="btnIcon">
                         <div id="img-documento-texto">
@@ -117,7 +120,7 @@ class arbolMulticamino {
                             <p>${document.name}</p>
                          </div>
                     </div>`
-            }else if(document.type == "application/pdf"){
+            } else if (document.type == "application/pdf") {
                 code += `<div id="${document.name}" class="btnIcon">
                         <div id="img-documento-pdf">
                             <a href="${document.content}" download=${document.name}><i class="fas fa-file-pdf"></i></a>
@@ -126,7 +129,7 @@ class arbolMulticamino {
                             <p>${document.name}</p>
                          </div>
                     </div>`
-            }else{
+            } else {
                 code += `<div id="${document.name}" class="btnIcon">
                         <div id="img-documento-imagen">
                             <a href="${document.content}" download=${document.name}><i class="fas fa-images"></i></a>
@@ -134,26 +137,23 @@ class arbolMulticamino {
                         <div id="nombre-documento">
                             <p>${document.name}</p>
                          </div>
-                    </div>` 
+                    </div>`
             };
         });
 
         return code;
     }
 
+    insertFile(fileName, carnet, permisos, path) {
+        let temp = this.getFolder(path);
+        temp.matriz.insert(fileName, carnet, permisos);
+    }
+
+    graphMatriz(path){
+        let temp = this.getFolder(path);
+        return temp.matriz.graph();
+    }
 
 }
 
-export {arbolMulticamino};
-
-/*let arbol = new arbolMulticamino();
-
-arbol.insert('Documentos', '/');
-arbol.insert('Pics', '/');
-arbol.insert('Docu', '/');
-arbol.insert('Pruebas', '/Documentos');
-arbol.insert('Prueba1', '/Documentos/Pruebas');
-arbol.insert('Prueba2', '/Documentos/Pruebas');
-arbol.delete("Pruebas", "/Documentos");
-
-console.log(arbol.graph());*/
+export { arbolMulticamino };
