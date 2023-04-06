@@ -1,12 +1,9 @@
 
-import { SparseMatrix } from "./matriz.js";
-
 class Tnode {
     constructor(folderName) {
         this.folderName = folderName;
         this.documents = []; //documentos de la carpeta
         this.children = []; //nodos hijos
-        this.matriz = new SparseMatrix();
         this.id = null;
     }
 }
@@ -143,17 +140,6 @@ class arbolMulticamino {
 
         return code;
     }
-
-    insertFile(fileName, carnet, permisos, path) {
-        let temp = this.getFolder(path);
-        temp.matriz.insert(fileName, carnet, permisos);
-    }
-
-    graphMatriz(path){
-        let temp = this.getFolder(path);
-        return temp.matriz.graph();
-    }
-
 }
 
 export { arbolMulticamino };

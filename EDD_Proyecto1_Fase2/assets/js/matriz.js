@@ -209,7 +209,7 @@ class SparseMatrix {
 
     graph() {
         let code = "graph [nodesep=\"0.8\", ranksep=\"0.6\"]; \n";
-        code += "M0[ label = \"Inicio\" width = 1.5 shape = \"square\" style = \"filled\" fillcolor =\"slateblue\" group=\"0\"]; \n";
+        code += "M0[ label = \"Documentos\" width = 1.5 shape = \"square\" group=\"0\"]; \n";
         code += this.#headersGraph()
         code += this.#nodesGraph()
         // console.log(code)
@@ -222,7 +222,7 @@ class SparseMatrix {
         let temp = null;
         try { temp = this.head.right } catch (error) { temp = null; console.log("GRAPH"); }
         while (temp != null) {
-            nodes += "Y" + temp.value + `[label="${temp.value}" width = 1.5 shape ="square" style="filled" fillcolor="skyblue3" group = ${temp.value} ];\n`
+            nodes += "Y" + temp.value + `[label="${temp.value}" width = 1.5 shape ="square" group = ${temp.value} ];\n`
             rank += "Y" + temp.value + ";";
             if (temp.right != null) {
                 conn += "Y" + temp.value + "->";
@@ -235,7 +235,7 @@ class SparseMatrix {
         conn += 'M0 ->';
         try { temp = this.head.down } catch (error) { temp = null; console.log("GRAPH"); }
         while (temp != null) {
-            nodes += "X" + temp.value + `[label="${temp.value}" width = 1.5 shape ="square" style="filled" fillcolor="skyblue3" group="0"];\n`
+            nodes += "X" + temp.value + `[label="${temp.value}" width = 1.5 shape ="square" group="0"];\n`
             if (temp.down != null) {
                 conn += "X" + temp.value + "->";
             } else {
@@ -259,7 +259,7 @@ class SparseMatrix {
             try { ty = tx.right } catch (error) { ty = null; console.log("errorX2"); }
             conn += `X${ty.x} -> `
             while (ty != null) {
-                nodes += `S${ty.x}_${ty.y}[label="${ty.value}" width=1.5 shape="square" style="filled" fillcolor="slategray1" group="${ty.y}"];\n`
+                nodes += `S${ty.x}_${ty.y}[label="${ty.value}" width=1.5 shape="square" group="${ty.y}"];\n`
                 rank += `{rank=same; X${ty.x}; S${ty.x}_${ty.y};}\n`;
                 if (ty.right != null) {
                     conn += `S${ty.x}_${ty.y} ->`;

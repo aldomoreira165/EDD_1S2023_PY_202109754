@@ -2,6 +2,7 @@
 import { arbolMulticamino } from "./arbol-multicamino.js";
 import { ArbolAVL } from "./arbol-avl.js";
 import { ListaCircular } from "./lista-circular.js";
+import { SparseMatrix } from "./matriz.js";
 
 const selectEstudiantes = document.getElementById("select-estudiantes");
 const selectArchivos = document.getElementById("select-archivos");
@@ -26,6 +27,7 @@ const botonSalir = document.getElementById("bnt-logout");
 
 let arbolCarpetas = new arbolMulticamino();
 let listaAcciones = new ListaCircular();
+let matrizPermisos = null;
 
 //función que se ejecuta al cargar la pagina
 function inicioPagina() {
@@ -251,6 +253,7 @@ function entrarCarpeta(folderName) {
   contenedorCarpetas.innerHTML = (arbolCarpetas.getHTML(curretPath))
   actualizarBotonesCarpetas();
   actualizarSelectArchivos();
+  matrizPermisos = null;
 }
 
 //funcion para retornar al inicio 
@@ -405,6 +408,13 @@ inputSubirArchivo.addEventListener("change", async function () {
         timer: 1500
       })
 
+      //insertando la acción en la lista
+      let accion = `Acción: Se creó el documento: ${nombreCopia}\\n Fecha:${(new Date()).toLocaleDateString()}\\n Hora:${(new Date()).toLocaleTimeString()}\\n`;
+      listaAcciones.insertar(accion);
+
+      //actualizando las acciones
+      actualizarAcciones();
+
       //graficando
       contenedorCarpetas.innerHTML = "";
       contenedorCarpetas.innerHTML = (arbolCarpetas.getHTML(rutaActual));
@@ -460,7 +470,14 @@ botonPermisos.addEventListener("click", function () {
   let nombreArchivo = (archivo.split("."))[0];
 
   try {
-    arbolCarpetas.insertFile(nombreArchivo, carnetEstudiante, permiso, barraRuta.value);
+
+    if (matrizPermisos == null) {
+      matrizPermisos = new SparseMatrix();
+      matrizPermisos.insert(nombreArchivo, carnetEstudiante, permiso);
+    } else {
+      matrizPermisos.insert(nombreArchivo, carnetEstudiante, permiso);
+    }
+
     Swal.fire({
       position: 'center',
       icon: 'success',
@@ -481,10 +498,19 @@ botonPermisos.addEventListener("click", function () {
 });
 
 botonReporteMatriz.addEventListener("click", function () {
-  const contenedorImagen = document.getElementById("container-matriz-img");
-  let url = 'https://quickchart.io/graphviz?graph=';
-  let body = `digraph G{${arbolCarpetas.graphMatriz(barraRuta.value)} }`;
-  contenedorImagen.setAttribute("src", url + body);
+  if (matrizPermisos != null) {
+    const contenedorImagen = document.getElementById("container-matriz-img");
+    let url = 'https://quickchart.io/graphviz?graph=';
+    let body = `digraph G{${matrizPermisos.graph()} }`;
+    contenedorImagen.setAttribute("src", url + body);
+  } else {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'No hay una matriz existente.',
+    })
+  }
+
 });
 
 

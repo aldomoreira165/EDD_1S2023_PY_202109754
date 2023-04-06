@@ -1,4 +1,3 @@
-
 import { Estudiante } from "./estudiante.js";
 import { ArbolAVL } from "./arbol-avl.js";
 
