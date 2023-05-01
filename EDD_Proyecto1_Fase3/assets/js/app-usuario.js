@@ -72,6 +72,35 @@ function inicioPagina() {
 
   //actualizando acordeon de archivos
   actualizarSelectArchivos();
+
+  //actualizando compartidos
+  actualizarTablaCompartidos();
+}
+
+function otorgarPermiso(carnet, permiso) {
+  let arbol = new ArbolAVL();
+  let temp = localStorage.getItem('arbolEstudiantesLS');
+
+  arbol.raiz = JSON.parse(temp).raiz;
+  arbol.darPermisos(carnet, permiso);
+  localStorage.setItem('arbolEstudiantesLS', JSON.stringify(arbol));
+}
+
+function actualizarTablaCompartidos() {
+  let fila = "";
+  const tablaCompartidos = document.getElementById('tabla-compartidos').querySelector('tbody');
+  let compartidosConmigo = JSON.parse(localStorage.getItem("estudianteLog")).compartidos;
+
+  for (let i = 0; i < compartidosConmigo.length; i++) {
+    fila += `
+                <tr>
+                    <th>${compartidosConmigo[i].propietario}</th>
+                    <td>${compartidosConmigo[i].archivo}</td>
+                    <td>${compartidosConmigo[i].permisos}</td>
+                </tr>
+                `;
+  }
+  tablaCompartidos.innerHTML = fila;
 }
 
 function actualizarSelectAlumnos() {
@@ -471,6 +500,7 @@ botonPermisos.addEventListener("click", function () {
   let archivo = (selectArchivos.options[selectArchivos.selectedIndex]).text;
   let permisos = (selectPermisos.options[selectPermisos.selectedIndex]).text;
 
+  //agregando la asignacion de permisos en todo el sistema
   if (localStorage.getItem('permisosSistema')) {
     let permisosSistema = JSON.parse(localStorage.getItem("permisosSistema"));
     let permisosArreglo = permisosSistema;
@@ -502,6 +532,9 @@ botonPermisos.addEventListener("click", function () {
       timer: 1500
     })
   }
+
+  //agregando la asignacion de permisos unicamente para el usuario
+  otorgarPermiso(destino, new Permiso(propietario, destino, ubicacion, archivo, permisos));
 
 });
 

@@ -238,11 +238,19 @@ class ArbolAVL {
         return true;
     }
 
-    modificarPermisos(carnet, accion) {
+    darPermisos(carnet, permiso) {
         const nodo = this.buscarEstudiante(carnet);
-        if (!nodo) return false;
-        nodo.estudiante.acciones = accion;
-        return true;
+        if (nodo) {
+            if (nodo.estudiante.compartidos == null || nodo.estudiante.compartidos == undefined) {
+                let sharedNew = [];
+                sharedNew.push(permiso);
+                nodo.estudiante.compartidos = sharedNew;
+            } else {
+                let shared = nodo.estudiante.compartidos;
+                shared.push(permiso)
+                nodo.estudiante.compartidos = shared;
+            }
+        }
     }
 }
 
