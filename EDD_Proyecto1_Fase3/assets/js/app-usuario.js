@@ -4,6 +4,7 @@ import { ArbolAVL } from "./arbol-avl.js";
 import { ListaCircular } from "./lista-circular.js";
 import { SparseMatrix } from "./matriz.js";
 import { Permiso } from "./permiso.js";
+import { Tree } from "./Tree.js";
 
 const selectEstudiantes = document.getElementById("select-estudiantes");
 const selectArchivos = document.getElementById("select-archivos");
@@ -22,12 +23,15 @@ const inputEliminarCarpeta = document.getElementById("input-eliminar-carpeta");
 const botonReporteCarpetas = document.getElementById("btn-reporte-carpetas");
 const botonReporteAcciones = document.getElementById("btn-reporte-acciones");
 const botonReporteMatriz = document.getElementById("btn-reporte-matriz");
+const botonReporteGrafo = document.getElementById("btn-reporte-no-dirigido");
 const botonRetornar = document.getElementById("boton-retornar");
 const botonPermisos = document.getElementById("btn-dar-permisos");
+const botonMensajes = document.getElementById("bnt-message");
 const botonSalir = document.getElementById("bnt-logout");
 
 let arbolCarpetas = new arbolMulticamino();
 let listaAcciones = new ListaCircular();
+let grafo = new Tree();
 let matrizPermisos = null;
 
 //función que se ejecuta al cargar la pagina
@@ -154,6 +158,13 @@ botonReporteCarpetas.addEventListener("click", function () {
   contenedorImagen.setAttribute("src", url + body);
 });
 
+botonReporteGrafo.addEventListener("click", function () {
+  const contenedorImagen = document.getElementById("container-grafo-img");
+  let url = 'https://quickchart.io/graphviz?graph=';
+  let body = `digraph G{${grafo.graph()} }`;
+  contenedorImagen.setAttribute("src", url + body);
+});
+
 //funcion para el reporte de acciones
 botonReporteAcciones.addEventListener("click", function () {
   const contenedorImagen = document.getElementById("container-acciones-img");
@@ -234,6 +245,9 @@ function eliminarCarpeta(nombreCarpeta, ruta) {
   //obteniendo el arbol de carpetas del localstorage
   arbolCarpetas.delete(nombreCarpeta, ruta);
 
+  //eliminando carpeta del grafo
+  grafo.delete(nombreCarpeta, ruta);
+
   //actulizando carpetas en el arbolAVL
   actualizarCarpetas();
 
@@ -301,6 +315,9 @@ botonRetornar.addEventListener("click", function () {
 function crearCarpeta(nombreCarpeta, ruta) {
   //obteniendo el arbol de carpetas del localstorage
   arbolCarpetas.insert(nombreCarpeta, ruta);
+
+  //insertando al grafo
+  grafo.insert(nombreCarpeta, ruta);
 
   //actulizando carpetas en el arbolAVL
   actualizarCarpetas();
@@ -553,6 +570,10 @@ botonReporteMatriz.addEventListener("click", function () {
   }
 
 });
+
+botonMensajes.addEventListener("click", function(){
+  window.location.href = "./mensajes.html";
+})
 
 
 /*actualizar datos al cargar la pagina*/

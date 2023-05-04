@@ -112,7 +112,7 @@ botonTrasladar.addEventListener("click", function () {
         for (let index = 0; index < estudiantesInOrden.length; index++) {
             let carnet = estudiantesInOrden[index].carnet;
             let nombre = estudiantesInOrden[index].nombre;
-            let password = estudiantesInOrden[index].password;
+            let password =  encriptarPassword(estudiantesInOrden[index].password);
             tabla.insert(carnet, nombre, password);
         }
 
@@ -244,21 +244,10 @@ botonSalir.addEventListener("click", function () {
     }
 })
 
-/*function encriptarPassword(passWord) {
-    const algorithm = 'aes-256-cbc'; // algoritmo de cifrado
-    const key = crypto.randomBytes(32); // clave de cifrado aleatoria
-    const iv = crypto.randomBytes(16); // vector de inicialización aleatorio
-
-    // Crear un objeto de cifrado con el algoritmo y la clave
-    const cipher = crypto.createCipheriv(algorithm, key, iv);
-
-    // Actualizar el cifrado con el texto a encriptar
-    let encrypted = cipher.update(passWord, 'utf8', 'hex');
-
-    // Finalizar el cifrado
-    encrypted += cipher.final('hex');
-    return encrypted
-}*/
+function encriptarPassword(passWord) {
+    const textoCifrado = CryptoJS.AES.encrypt(passWord, '').toString();
+    return textoCifrado;
+}
 
 
 

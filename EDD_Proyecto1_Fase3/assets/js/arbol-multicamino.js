@@ -5,6 +5,7 @@ class Tnode {
         this.documents = []; //documentos de la carpeta
         this.children = []; //nodos hijos
         this.id = null;
+        this.weight = 0;
     }
 }
 

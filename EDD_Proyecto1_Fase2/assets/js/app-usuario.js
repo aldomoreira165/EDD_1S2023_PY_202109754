@@ -21,6 +21,7 @@ const inputEliminarCarpeta = document.getElementById("input-eliminar-carpeta");
 const botonReporteCarpetas = document.getElementById("btn-reporte-carpetas");
 const botonReporteAcciones = document.getElementById("btn-reporte-acciones");
 const botonReporteMatriz = document.getElementById("btn-reporte-matriz");
+const botonReporteGrafo = document.getElementById("btn-reporte-no-dirigido");
 const botonRetornar = document.getElementById("boton-retornar");
 const botonPermisos = document.getElementById("btn-dar-permisos");
 const botonSalir = document.getElementById("bnt-logout");
@@ -121,6 +122,14 @@ botonReporteCarpetas.addEventListener("click", function () {
   const contenedorImagen = document.getElementById("container-arbol-img");
   let url = 'https://quickchart.io/graphviz?graph=';
   let body = `digraph G{${arbolCarpetas.graph(barraRuta.value)} }`;
+  contenedorImagen.setAttribute("src", url + body);
+});
+
+botonReporteGrafo.addEventListener("click", function () {
+  const contenedorImagen = document.getElementById("container-grafo-img");
+  let url = 'https://quickchart.io/graphviz?graph=';
+  let body = `digraph G{${arbolCarpetas.graphNoDirigido()} }`;
+  console.log(body);
   contenedorImagen.setAttribute("src", url + body);
 });
 

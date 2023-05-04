@@ -31,6 +31,16 @@
     color: #ececec
 }
 
+#message{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#message a:active{
+    color: #ececec
+}
+
 #nav #nombre-sitio a{
     text-decoration: none;
     color: #fff;
@@ -106,6 +116,12 @@
 
 /*estilos boton salir*/
 #log-out a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 35px;
+}
+
+#message a{
     text-decoration: none;
     color: #fff;
     font-size: 35px;
@@ -201,6 +217,9 @@
 #boton-retornar:hover{
     cursor: pointer;
 }
+
+/*estilos para la pagina de mensajes*/
+
 
 /*Media queries*/
 
