@@ -231,6 +231,13 @@ class ArbolAVL {
         return true;
     }
 
+    modificarGrafo(carnet, grafo) {
+        const nodo = this.buscarEstudiante(carnet);
+        if (!nodo) return false;
+        nodo.estudiante.grafo = grafo;
+        return true;
+    }
+
     modificarAcciones(carnet, accion) {
         const nodo = this.buscarEstudiante(carnet);
         if (!nodo) return false;

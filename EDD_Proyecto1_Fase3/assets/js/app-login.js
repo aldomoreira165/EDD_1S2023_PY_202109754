@@ -20,7 +20,7 @@ botonIniciar.addEventListener('submit', function (event) {
         let buscandoEstudiante =  arbol.buscarEstudiante(campoCarnet);
 
         if (buscandoEstudiante != null){
-            let estudianteLoggeado = new Estudiante(buscandoEstudiante.estudiante.carnet,buscandoEstudiante.estudiante.nombre, buscandoEstudiante.estudiante.password, buscandoEstudiante.estudiante.carpeta, buscandoEstudiante.estudiante.acciones, buscandoEstudiante.estudiante.compartidos)
+            let estudianteLoggeado = new Estudiante(buscandoEstudiante.estudiante.carnet,buscandoEstudiante.estudiante.nombre, buscandoEstudiante.estudiante.password, buscandoEstudiante.estudiante.carpeta, buscandoEstudiante.estudiante.acciones, buscandoEstudiante.estudiante.compartidos, buscandoEstudiante.estudiante.grafo)
             if(campoPassword == estudianteLoggeado.password){
                 localStorage.setItem('estudianteLog', JSON.stringify(estudianteLoggeado));
                 window.location.href = "./EDD_Proyecto1_Fase3/ventana-usuario.html";

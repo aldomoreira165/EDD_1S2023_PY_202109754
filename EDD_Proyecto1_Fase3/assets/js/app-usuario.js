@@ -43,6 +43,13 @@ function inicioPagina() {
 
   //mostrando las carpetas del usuario recien loggeado
   if (usuario.carpeta != null) {
+    let grafoLoggeado = new Tree();
+    let temp2 = JSON.parse(localStorage.getItem("estudianteLog")).grafo;
+
+    grafoLoggeado.root = temp2.root;
+
+    grafo.root = temp2.root;
+
     let carpetasLoggeado = new arbolMulticamino();
     let temp = JSON.parse(localStorage.getItem("estudianteLog")).carpeta;
 
@@ -387,6 +394,7 @@ function actualizarCarpetas() {
 
   arbol.raiz = JSON.parse(temp).raiz;
   arbol.modificarCarpetas(usuario.carnet, arbolCarpetas);
+  arbol.modificarGrafo(usuario.carnet, grafo)
 
   localStorage.setItem('arbolEstudiantesLS', JSON.stringify(arbol));
 }

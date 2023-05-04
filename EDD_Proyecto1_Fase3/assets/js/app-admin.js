@@ -37,7 +37,7 @@ inputCargaMasiva.addEventListener("change", function () {
 
             const jsonData = JSON.parse(contents);
             jsonData.alumnos.forEach(function (alumno) {
-                let nuevoEstudiante = new Estudiante(alumno.carnet, alumno.nombre, alumno.password, null, null, null);
+                let nuevoEstudiante = new Estudiante(alumno.carnet, alumno.nombre, alumno.password, null, null, null, null);
                 arbol_estudiantes.insertar(nuevoEstudiante);
                 arreglo_estudiantes.push(nuevoEstudiante);
             });
