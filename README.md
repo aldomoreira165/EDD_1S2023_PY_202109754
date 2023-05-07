@@ -104,6 +104,54 @@ Además hubieron algunas otras funciones importantes como:
 
 * Subir archivo JSON: En EDD GoDrive, el administrador tendrá la opción de subir un archivo JSON que contenga los datos de los estudiantes aceptados. Esta característica permitirá una gestión más eficiente de los usuarios y facilitará el registro de nuevos estudiantes en el sistema. El archivo JSON deberá contener información detallada sobre cada estudiante aceptado, como su nombre completo, dirección de correo electrónico, nombre de usuario y contraseña. Además, se pueden incluir otros datos relevantes, como su número de identificación estudiantil o su facultad. Al subir el archivo JSON, el sistema EDD GoDrive procesará los datos y actualizará la base de datos de usuarios del sistema, lo que permitirá un acceso más fácil y rápido a la información de los estudiantes. Esta característica es especialmente útil para administradores que necesitan actualizar información de usuarios en bloque, en lugar de hacerlo manualmente uno por uno. De esta manera, se ahorra tiempo y se garantiza la precisión de los datos almacenados en el sistema.
 
+# Tercera Fase de EDD GoDrive
+### Manual de Usuario
+
+Funciones del Administrador
+
+En la última fase del desarrollo del sistema de gestión de archivos, se han agregado nuevas funcionalidades que mejoran la experiencia del usuario y aumentan la eficiencia del sistema.
+
+Una de las principales mejoras ha sido la implementación de un sistema de notificaciones en tiempo real que alerta a los usuarios sobre las acciones que se han realizado en los archivos o carpetas compartidas. Cuando un usuario comparte un archivo o carpeta con otros, se envía automáticamente una notificación a los destinatarios, indicando que se ha compartido un archivo o carpeta específica y los permisos asignados. De esta manera, los usuarios podrán mantenerse al tanto de las acciones que se realizan en los archivos compartidos y saber quién está accediendo a ellos. Asimismo, el usuario sabrá cuando se le haya compartido algun archivo. 
+
+Otra mejora importante ha sido la integración de una herramienta de colaboración en línea. Los usuarios ahora pueden trabajar en documentos en tiempo real y ver los cambios que otros usuarios están realizando en el mismo documento al mismo tiempo. Esta función mejora la productividad y la eficiencia del equipo, lo que permite a los usuarios trabajar de manera más efectiva en colaboración.
 
 
 
+### Manual Técnico
+
+Para el desarrollo de esta fase se implementó una tabla HASH. A continuación se indica cómo se desarrolló: 
+
+La tabla hash es una estructura de datos que se utiliza para almacenar y recuperar información de manera rápida y eficiente. En esta aplicación, se ha implementado una tabla hash para almacenar los datos de los estudiantes. Para hacer esto, se ha seguido una serie de pasos:
+
+Se ha creado una tabla hash con una capacidad inicial de 7 espacios disponibles.
+Se ha definido una función hash por división, que toma el valor del carnet del estudiante como parámetro y devuelve un valor entero que se utiliza como índice para insertar el nodo en la tabla hash.
+
+Se ha establecido que cuando la tabla hash llegue al 75% de su capacidad, se aumentará su capacidad hasta el siguiente número primo.
+
+Se ha utilizado una técnica de resolución de colisiones llamada direccionamiento abierto por salto al cuadrado. Cuando se produce una colisión, se toma el valor hash calculado y se eleva al cuadrado, y se intenta insertar el nodo en la nueva posición. Si el nuevo hash sobrepasa el tamaño de la tabla hash, se comienza a recorrer el arreglo desde el inicio con los saltos restantes hasta que se encuentre un espacio vacío.
+
+En resumen, la tabla hash implementada en esta aplicación se basa en una función hash por división y utiliza una técnica de resolución de colisiones llamada direccionamiento abierto por salto al cuadrado para insertar los nodos en la tabla hash. Además, se aumenta la capacidad de la tabla hash cuando se alcanza el 75% de su capacidad inicial.
+
+Asimismo, para la función de los permisos tanto a nivel general en el sistema como para cada usuario. Se agregó el atributo "Permisos" a la clase estudiante para que fuera posible almacenar los permisos que cada uno de los usuarios posee. Asimismo, en la clase del arbol avl se creó un metodo llamado modificarPermisos para que cada vez que se otorgará un permiso este se almacena en el arbol AVL almacenado en el local storage y así mantener la persisistencia de datos. Es decir, para evitar que estos datos se pierdan al detener el servidor o al salir accidental u intencionalmente del navegador. 
+
+GRAFO NO DIRIGIDO 
+
+En cuanto al grafo no dirigido, el usuario que iniciaba sesión tenía una ventana en la que se mostraban diferentes opciones de creación, eliminación y modificación de carpetas. Para que el usuario pudiera acceder a las carpetas de su sistema, se usaba una barra superior de búsqueda, donde colocaba la ruta de su carpeta. Se debía validar que la ruta de la carpeta fuera existente. Por ejemplo, si quería acceder a /imagenes/2023 pero la carpeta imagenes no existía en la raíz, se mostraba una alerta que especificaba que el directorio no era válido.
+
+Para el almacenamiento de las carpetas se usaba el árbol indexado de la fase 2 para leer las carpetas del sistema y se almacenaba en una matriz de adyacencia para poder realizar el árbol de recubrimiento. Esta matriz de adyacencia permitía visualizar las relaciones entre directorios, lo cual servía para la navegación entre carpetas, tomando como carpeta raíz “/” el nodo principal del árbol.
+
+SISTEMA DE MENSAJERÍA 
+
+Con el objetivo de mejorar la comunicación entre estudiantes, se ha creado un nuevo apartado en el que los estudiantes podrán enviar mensajes entre sí. Para garantizar la seguridad de las conversaciones, los mensajes se enviarán encriptados. Cuando un usuario emisor envía un mensaje, el texto se cifra y se mantiene así hasta que el receptor inicie sesión y pueda desencriptarlo para leerlo.
+
+Para manejar el sistema de mensajería se utilizará la tecnología blockchain para garantizar la seguridad e integridad de los mensajes. Para esto, se empleará un sistema de almacenamiento que se asemeja a una lista doblemente enlazada de nodos. El sistema de blockchain tendrá los siguientes atributos:
+
+Índice: Este número representa el número del bloque. El bloque génesis tendrá un valor de índice de 0, y cada bloque adicional creado tendrá valores incrementales (1, 2, 3, etc.).
+
+Timestamp: Representa la fecha y hora exacta en que se creó el bloque, con el siguiente formato: DD-MM-YY-::HH:MM:SS.
+
+Transmitter: Representa al emisor del mensaje, identificado por su número de carnet.
+Receiver: Representa al receptor del mensaje, identificado también por su número de carnet.
+Message: Este es el cuerpo del mensaje enviado. Para este, se utilizará la encriptación AES.
+PreviousHash: Este atributo representa el bloque anterior y sirve para validar que la cadena del blockchain no esté corrupta. En el caso del bloque génesis, el hash anterior debe ser 0000.
+Hash: Este atributo protege la información del mensaje y garantiza que no esté corrupta. Para el caso de este proyecto, se utilizará la encriptación SHA256 y se creará una función que reciba como parámetros el índice, timestamp, transmitter, receiver y message, y a partir de ellos genere el hash correspondiente. Por ejemplo: SHA-256(index+timestamp+transmitter+receiver+message).
