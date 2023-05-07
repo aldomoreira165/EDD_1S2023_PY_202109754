@@ -113,15 +113,15 @@ En la última fase del desarrollo del sistema de gestión de archivos, se han ag
 
 Una de las principales mejores es que ahora el usuario tiene un nuevo boton llamado "Traladar datos" el cual permite almacenar los datos almacenados en el arbol avl creado con anterioridad ahora se pueden almacenar en en una tabla hash recorriendo dicho arbol con recorrido inOrden. Cuando dichos datos son almacenados en la tabla hash estos contendran los mismos datos y/o atributos que se tienen en la tabla que hace referencia a los datos almacenados en el arbol. Con la diferencia de que la contraseña estará encriptada. Dado que se desea comenzar a aplicar los conceptos de encriptación se muestra la contraseña de esa forma para evitar el robo de información como si de una base de datos se tratara. Entonces, al momento de iniciar sesión se buscará al estudiante, se desencriptará la contraseña y se verificará si esta coincide con la contraseña ingresada.
 
-![TablaHash](https://imgur.com/9UUCVtX)
+![TablaHash](https://imgur.com/9UUCVtX.png)
 
 Asimismo, el administrador contará con el reporte de cada uno de los archivos compartidos en el sistema por cada uno de los usuarios o estudiantes que lo conforman. Esto para que así pueda mantener un mejor control del sistema y del uso que los estudiantes le dan a la plataforma. Por ello, el administrador podrá visualizar tanto la persona que otorga el permiso, tanto como el que lo recibe. Adicionalmente, podrá visualizar la ruta en la que el archivo se encuentra almacenado, así como el nombre y los permisos que el usuario receptor posee sobre dicho archivo. También contará con la posibilidad de descargar dicho archivo y poder almacenarlo en su equipo para el uso que de desee ya que como administrador es muy importante mantener un control sobre lo que los estudiantes comparten o almacenan en las plataformas educativas.
 
-![Compartidos](https://imgur.com/CgetQ8P)
+![Compartidos](https://imgur.com/CgetQ8P.png)
 
 Una de las principales mejoras ha sido la implementación de un sistema de notificaciones en tiempo real que alerta a los usuarios sobre las acciones que se han realizado en los archivos o carpetas compartidas. Cuando un usuario comparte un archivo o carpeta con otros, se envía automáticamente una notificación a los destinatarios, indicando que se ha compartido un archivo o carpeta específica y los permisos asignados. De esta manera, los usuarios podrán mantenerse al tanto de las acciones que se realizan en los archivos compartidos y saber quién está accediendo a ellos. Asimismo, el usuario sabrá cuando se le haya compartido algun archivo. Y podrá descargarlo o o modificarlo en caso de un archivo de texto plano se estuvieta hablando. Esto para facilitar la manipulación de archivos que se maneja dentro del sistema y evitar que el usp de la plataforma sea trabajoso o incomodo para algunas personas.
 
-![CompartidoConmigo](https://imgur.com/RMPX8Ex)
+![CompartidoConmigo](https://imgur.com/RMPX8Ex.png)
 
 Otra mejora importante ha sido la integración de una herramienta de colaboración en línea. Los usuarios ahora pueden trabajar en documentos en tiempo real y ver los cambios que otros usuarios están realizando en el mismo documento al mismo tiempo. Esta función mejora la productividad y la eficiencia del equipo, lo que permite a los usuarios trabajar de manera más efectiva en colaboración.
 
@@ -129,7 +129,7 @@ Asimismo, una integración importante al sistema es la mensajería entre usuario
 
 En cuanto a los reportes que el usuario podrá visualizar en esta fase se tienen las tablas que contienen los reportes recibidos durante los últimos días. Así como también podrá visualizar un reporte del grafo no dirigido del directorio de carpetas de cada uno de los usuarios. Podrá visualizar absolutamente todos los archivos almacenados así como su ubicación y la altura que posee dentro del directorio. 
 
-![Grafo](https://imgur.com/gW5Wexi)
+![Grafo](https://imgur.com/gW5Wexi.png)
 
 ### Manual Técnico
 
